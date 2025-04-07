@@ -10,13 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class controller {
-    @Autowired
-    ActorRepository actorRepository;
+public class Controlador {
+    @Autowired protected ActorRepository actorRepository;
     @GetMapping("/")
     public String index(Model model) {
         List<Actor> actors = actorRepository.findAll();
         model.addAttribute("actors", actors);
-        return "p2";
+        return "actores";
     }
 }

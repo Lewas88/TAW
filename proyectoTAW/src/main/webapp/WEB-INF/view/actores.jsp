@@ -9,14 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Catálogo de libros disponibles</title>
+    <title>Catálogo de Actores</title>
 </head>
 
 <%
-    List<Actor> lista = (List<Actor>) request.getAttribute("libros");
+    List<Actor> lista = (List<Actor>) request.getAttribute("actors");
 %>
 <body>
-<h1>Catálogo de libros disponibles</h1>
+<h1>Catálogo de Actores disponibles</h1>
 
 <table border="1">
     <tr>
@@ -25,16 +25,17 @@
         <th></th>
     </tr>
     <%
-        for (Actor libro: lista) {
+        for (Actor actor: lista) {
     %>
     <tr>
-        <td><%= libro.getId() %></td>
-        <td><%= libro.getNombre() %></td>
+        <td><%= actor.getId() %></td>
+        <td><%= actor.getNombre() %></td>
         <td><form method="post" action="/editar">
-            <input type="hidden" name="id" value="<%= libro.getId() %>">
+            <input type="hidden" name="id" value="<%= actor.getId() %>">
             <input type="submit" value="Editar"/>
         </form></td>
-       </tr>
+        <td><a href="/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=actor.getNombre() %>?')">Borrar</a> </td>
+    </tr>
     <%
         }
     %>

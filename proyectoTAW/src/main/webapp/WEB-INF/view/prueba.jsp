@@ -16,6 +16,6 @@
 %>
 <body>
 <h1>Catálogo de libros disponibles</h1>
-<p> <%= lista.getFirst().getNombre()%></p>
+<p> <%= lista.get(0).getNombre()%></p>
 </body>
 </html>
