@@ -6,13 +6,21 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "genero_pelicula")
-public class GeneroPelicula {
+@Table(name = "lista_pelicula")
+public class ListaPelicula {
     @EmbeddedId
-    private GeneroPeliculaId id;
+    private ListaPeliculaId id;
+
+    @MapsId("listaId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "Lista_ID", nullable = false)
+    private Lista lista;
 
     @MapsId("peliculaId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -20,10 +28,7 @@ public class GeneroPelicula {
     @JoinColumn(name = "Pelicula_ID", nullable = false)
     private es.uma.taw.proyectotaw.entity.Pelicula pelicula;
 
-    @MapsId("generoId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "Genero_ID", nullable = false)
-    private Genero genero;
+    @Column(name = "Fecha_Agregada")
+    private LocalDate fechaAgregada;
 
 }

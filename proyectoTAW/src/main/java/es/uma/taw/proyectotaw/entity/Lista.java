@@ -11,29 +11,25 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "review")
-public class Review {
+@Table(name = "lista")
+public class Lista {
     @Id
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "Califica")
-    private Double califica;
+    @Column(name = "Nombre", length = 100)
+    private String nombre;
 
-    @Column(name = "Comentario", length = 500)
-    private String comentario;
+    @Lob
+    @Column(name = "Descripcion")
+    private String descripcion;
 
-    @Column(name = "Fecha")
-    private LocalDate fecha;
+    @Column(name = "Fecha_Creacion")
+    private LocalDate fechaCreacion;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Usuario_ID", nullable = false)
     private es.uma.taw.proyectotaw.entity.Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private Pelicula pelicula;
 
 }

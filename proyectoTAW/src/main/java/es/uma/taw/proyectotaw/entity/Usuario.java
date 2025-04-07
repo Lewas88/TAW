@@ -16,13 +16,13 @@ public class Usuario {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "Nombre", length = 45)
+    @Column(name = "Nombre", length = 100)
     private String nombre;
 
-    @Column(name = "Correo", length = 45)
+    @Column(name = "Correo", length = 100)
     private String correo;
 
-    @Column(name = "`Contraseña_Hash`", length = 45)
-    private String contraseñaHash;
+    @Column(name = "Contrasena_Hash")
+    private String contrasenaHash;
 
 }

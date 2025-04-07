@@ -16,7 +16,7 @@ public class Actor {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "Nombre", length = 45)
+    @Column(name = "Nombre", length = 100)
     private String nombre;
 
     @Column(name = "Edad")

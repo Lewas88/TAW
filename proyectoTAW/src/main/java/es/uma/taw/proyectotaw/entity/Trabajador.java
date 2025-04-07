@@ -16,13 +16,13 @@ public class Trabajador {
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "Nombre", length = 20)
+    @Column(name = "Nombre", length = 100)
     private String nombre;
 
-    @Column(name = "Puesto", length = 30)
+    @Column(name = "Puesto", length = 50)
     private String puesto;
 
-    @Column(name = "Departamento", length = 30)
+    @Column(name = "Departamento", length = 50)
     private String departamento;
 
 }

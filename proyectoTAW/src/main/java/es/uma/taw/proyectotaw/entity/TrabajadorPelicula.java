@@ -3,6 +3,8 @@ package es.uma.taw.proyectotaw.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
@@ -14,15 +16,17 @@ public class TrabajadorPelicula {
 
     @MapsId("trabajadorId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Trabajador_ID", nullable = false)
     private Trabajador trabajador;
 
     @MapsId("peliculaId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Pelicula_ID", nullable = false, referencedColumnName = "ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "Pelicula_ID", nullable = false)
     private Pelicula pelicula;
 
-    @Column(name = "Tipo_Trabajo", length = 20)
+    @Column(name = "Tipo_Trabajo", length = 50)
     private String tipoTrabajo;
 
 }
