@@ -17,28 +17,33 @@
 %>
 <body>
 <h1>Catálogo de Actores disponibles</h1>
-
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>NOMBRE</th>
-        <th></th>
-    </tr>
-    <%
-        for (Actor actor: lista) {
-    %>
-    <tr>
-        <td><%= actor.getId() %></td>
-        <td><%= actor.getNombre() %></td>
-        <td><form method="post" action="/editar">
-            <input type="hidden" name="id" value="<%= actor.getId() %>">
-            <input type="submit" value="Editar"/>
-        </form></td>
-        <td><a href="/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=actor.getNombre() %>?')">Borrar</a> </td>
-    </tr>
-    <%
-        }
-    %>
-</table>
+    <form method="post" action="/editar">
+        <input type="submit" value="Añadir"/>
+    </form>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>EDAD</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <%
+            for (Actor actor: lista) {
+        %>
+        <tr>
+            <td><%= actor.getId() %></td>
+            <td><%= actor.getNombre() %></td>
+            <td><%= actor.getEdad() %></td>
+            <td><form method="post" action="/editar">
+                <input type="hidden" name="id" value="<%= actor.getId() %>">
+                <input type="submit" value="Editar"/>
+            </form></td>
+            <td><a href="/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=actor.getNombre() %>?')">Borrar</a></td>
+        </tr>
+        <%
+            }
+        %>
+    </table>
 </body>
 </html>
