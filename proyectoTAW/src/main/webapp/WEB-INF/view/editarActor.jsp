@@ -18,11 +18,12 @@
     <title><%=(isEditar)? "Editar" : "Añadir"%> actor</title>
 </head>
 <body>
-<form action="guardar" method="post">
-    <input type="hidden" name="id" value="<%=(actor.getId()==null)? -1 : actor.getId()%>">
-    Nombre: <input type="text" name="nombre" value="<%= (actor.getNombre()==null)? "" : actor.getNombre()%>"><br>
-    Edad: <input type="number" name="edad" value="<%= (actor.getEdad()==null)? "": actor.getEdad()%>">
-    <input type="submit" value="Guardar">
-</form>
+    <h1><%=(isEditar)? "Editar" : "Añadir"%> actor</h1>
+    <form action="/actores/guardar" method="post">
+        <input type="hidden" name="id" value="<%=(actor.getId()==null)? -1 : actor.getId()%>">
+        Nombre: <input type="text" name="nombre" value="<%= (actor.getNombre()==null)? "" : actor.getNombre()%>"><br>
+        Edad: <input type="number" name="edad" value="<%= (actor.getEdad()==null)? "": actor.getEdad()%>">
+        <input type="submit" value="Guardar">
+    </form>
 </body>
 </html>

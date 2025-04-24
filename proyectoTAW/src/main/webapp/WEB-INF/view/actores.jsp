@@ -16,8 +16,10 @@
     List<Actor> lista = (List<Actor>) request.getAttribute("actors");
 %>
 <body>
+<jsp:include page="cabecera.jsp" />
+
 <h1>Catálogo de Actores disponibles</h1>
-    <form method="post" action="/editar">
+    <form method="post" action="/actores/editar">
         <input type="submit" value="Añadir"/>
     </form>
     <table border="1">
@@ -35,11 +37,11 @@
             <td><%= actor.getId() %></td>
             <td><%= actor.getNombre() %></td>
             <td><%= actor.getEdad() %></td>
-            <td><form method="post" action="/editar">
+            <td><form method="post" action="/actores/editar">
                 <input type="hidden" name="id" value="<%= actor.getId() %>">
                 <input type="submit" value="Editar"/>
             </form></td>
-            <td><a href="/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=actor.getNombre() %>?')">Borrar</a></td>
+            <td><a href="/actores/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=actor.getNombre() %>?')">Borrar</a></td>
         </tr>
         <%
             }

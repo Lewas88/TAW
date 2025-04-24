@@ -13,6 +13,9 @@
     <title>A Web Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+<%
+    Actor actor = (Actor) request.getAttribute("actor");
+%>
 <body>
 <header>
     <nav>
@@ -29,12 +32,11 @@
 <main>
     <section class="profile">
         <div class="left">
-            <h2>NAME</h2>
+            <h2><%=actor.getNombre()%></h2>
             <div class="profile-img"></div>
             <div class="info">
                 <h3>Info</h3>
-                <p>Birth Date: ...</p>
-                <p>Genre: ...</p>
+                <p>Edad: <%= actor.getEdad()%></p>
                 <!-- Más info -->
             </div>
         </div>

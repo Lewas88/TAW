@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
-public class Controlador {
+@RequestMapping("/actores")
+public class ActoresControlador {
     @Autowired protected ActorRepository actorRepository;
     @GetMapping("/")
     public String index(Model model) {
@@ -36,11 +38,11 @@ public class Controlador {
         actor.setNombre(nombre);
         actor.setEdad(edad);
         this.actorRepository.save(actor);
-        return "redirect:/";
+        return "redirect:/actores/";
     }
     @GetMapping("/borrar")
     public String doBorrarActor(@RequestParam("id")Integer id) {
         this.actorRepository.deleteById(id);
-        return "redirect:/";
+        return "redirect:/actores/";
     }
 }
