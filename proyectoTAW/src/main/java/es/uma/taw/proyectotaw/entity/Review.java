@@ -34,6 +34,6 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private Pelicula pelicula;
+    private PeliculaEntity pelicula;
 
 }

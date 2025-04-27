@@ -9,12 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <%
+        List<Actor> lista = (List<Actor>) request.getAttribute("actors");
+    %>
     <title>Catálogo de Actores</title>
 </head>
-
-<%
-    List<Actor> lista = (List<Actor>) request.getAttribute("actors");
-%>
 <body>
 <jsp:include page="cabecera.jsp" />
 
