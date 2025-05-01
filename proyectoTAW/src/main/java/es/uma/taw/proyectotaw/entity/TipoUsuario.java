@@ -10,16 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "actor")
-public class Actor {
+@Table(name = "tipo_usuario")
+public class TipoUsuario {
     @Id
     @Column(name = "ID", nullable = false)
     private Integer id;
 
-    @Column(name = "Nombre", length = 100)
-    private String nombre;
-
-    @Column(name = "Edad")
-    private Integer edad;
+    @Column(name = "Tipo", length = 45)
+    private String tipo;
 
 }

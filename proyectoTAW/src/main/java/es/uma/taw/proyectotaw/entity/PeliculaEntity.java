@@ -41,7 +41,7 @@ public class PeliculaEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "Usuario_ID", nullable = false)
+    @JoinColumn(name = "Usuario_ID", nullable = false, referencedColumnName = "ID")
     private UsuarioEntity usuario;
 
 }

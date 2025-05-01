@@ -10,9 +10,12 @@ import lombok.Setter;
 @Table(name = "usuario")
 public class UsuarioEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID")
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "Tipo_Usuario_ID", nullable = false)
+    private TipoUsuario tipoUsuario;
 
     @Column(name = "Nombre", length = 100)
     private String nombre;
