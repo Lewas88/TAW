@@ -6,4 +6,5 @@ import lombok.Data;
 public class Usuario {
     protected String correo;
     protected String password;
+    protected Integer tipoUsuario;
 }

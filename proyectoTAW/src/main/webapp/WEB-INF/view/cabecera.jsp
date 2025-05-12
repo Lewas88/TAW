@@ -46,6 +46,15 @@
                             <a class="nav-link" href="/login/logout">Cerrar sesión</a>
                         </li>
                     <%
+                        if (user.getTipoUsuario().getId() == 3) {
+                    %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/analista/">ANALista</a>
+                        </li>
+                    <%
+                        }
+                    %>
+                    <%
                         } if(false) {
                     %>
                     <li class="nav-item">
