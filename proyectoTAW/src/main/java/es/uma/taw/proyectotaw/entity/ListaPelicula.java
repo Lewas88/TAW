@@ -17,13 +17,13 @@ public class ListaPelicula {
     private ListaPeliculaId id;
 
     @MapsId("listaId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Lista_ID", nullable = false)
     private Lista lista;
 
     @MapsId("peliculaId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
     private Pelicula pelicula;

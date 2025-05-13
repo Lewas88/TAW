@@ -26,12 +26,12 @@ public class Review {
     @Column(name = "Fecha")
     private LocalDate fecha;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Usuario_ID", nullable = false)
     private UsuarioEntity usuario;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
     private Pelicula pelicula;
