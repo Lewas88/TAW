@@ -1,7 +1,6 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.PeliculaRepository;
-import es.uma.taw.proyectotaw.entity.PeliculaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

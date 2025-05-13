@@ -26,7 +26,7 @@ public class ListaPelicula {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private PeliculaEntity pelicula;
+    private Pelicula pelicula;
 
     @Column(name = "Fecha_Agregada")
     private LocalDate fechaAgregada;

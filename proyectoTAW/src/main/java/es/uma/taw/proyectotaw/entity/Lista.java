@@ -21,7 +21,7 @@ public class Lista {
     private String nombre;
 
     @Lob
-    @Column(name = "Descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "Fecha_Creacion")

@@ -18,7 +18,7 @@ public class Casting {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private PeliculaEntity pelicula;
+    private Pelicula pelicula;
 
     @MapsId("actorId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -18,7 +18,7 @@ public class GeneroPelicula {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private PeliculaEntity pelicula;
+    private Pelicula pelicula;
 
     @MapsId("generoId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
