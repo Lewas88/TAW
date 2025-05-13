@@ -11,6 +11,7 @@ public class BaseControlador {
     public String doHome() {
         return "home";
     }
+
     @PostMapping("/buscar")
     public String doBuscar(@RequestParam("busqueda") String busqueda) {
         String s = busqueda;
