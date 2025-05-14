@@ -49,7 +49,7 @@
                         if (user.getTipoUsuario().getId() == 3) {
                     %>
                         <li class="nav-item">
-                            <a class="nav-link" href="/analista/">ANALista</a>
+                            <a class="nav-link" href="/analista/">Analista</a>
                         </li>
                     <%
                         }

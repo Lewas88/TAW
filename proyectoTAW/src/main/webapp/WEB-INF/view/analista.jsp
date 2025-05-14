@@ -1,4 +1,8 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.PeliculaEntity" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.Review" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
   Created by IntelliJ IDEA.
   User: diegoalba
   Date: 12/5/25
@@ -13,14 +17,31 @@
 <body>
 <jsp:include page="cabecera.jsp" />
 <%
+    List<PeliculaEntity> peliculas = (List<PeliculaEntity>) request.getAttribute("peliculas");
+    List<Review> reviews = (List<Review>) request.getAttribute("reviews");
+    List<Actor> actores = (List<Actor>) request.getAttribute("actores");
+    List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("usuarios");
     Long totalPeliculas = (Long) request.getAttribute("totalPeliculas");
     Long totalReviews = (Long) request.getAttribute("totalReviews");
     Long totalActores = (Long) request.getAttribute("totalActores");
     Long totalUsuarios = (Long) request.getAttribute("totalUsuarios");
+    Integer buscador = (Integer) request.getAttribute("buscador");
 %>
+<form action="/analista/elegirBuscadorDePeliculas" method="post">
+    <input type="submit" value="Buscador de Peliculas">
+</form>
+<form action="/analista/elegirBuscadorDeReviews" method="post">
+    <input type="submit" value="Buscador de Reviews">
+</form>
+<form action="/analista/elegirBuscadorDeActores" method="post">
+    <input type="submit" value="Buscador de Actores">
+</form>
+<form action="/analista/elegirBuscadorDeUsuarios" method="post">
+    <input type="submit" value="Buscador de Usuarios">
+</form>
 <table border="1">
     <tr>
-        <th>Objeto</th>
+        <th>Entidad</th>
         <th>Cantidad</th>
     </tr>
     <tr>
@@ -40,5 +61,95 @@
         <td><%= totalUsuarios %></td>
     </tr>
 </table>
+<%
+    if (buscador == 0) {
+    } else if (buscador == 1){
+%>
+<form action="/filtrarPeliculas" method="post">
+    <input type="text" name="texto">
+    <input type="checkbox" name="entidad"> Peliculas
+    <input type="checkbox" name="entidad"> Reviews
+    <input type="checkbox" name="entidad"> Actores
+    <input type="checkbox" name="entidad"> Usuarios
+    <input type="submit" value="Filtrar">
+</form>
+<table border="1">
+    Peliculas
+    <tr>
+        <th>Titulo</th>
+        <th>Fecha Estreno</th>
+        <th>Sinopsis</th>
+        <th>Presupuesto</th>
+        <th>Ingresos</th>
+        <th>Rating</th>
+        <th>Duracion</th>
+    </tr>
+    <% for (PeliculaEntity pelicula : peliculas) { %>
+    <tr>
+        <td><%= pelicula.getTitulo() %></td>
+        <td><%= pelicula.getFechaEstreno() %></td>
+        <td><%= pelicula.getSinopsis() %></td>
+        <td><%= pelicula.getPresupuesto() %></td>
+        <td><%= pelicula.getIngresos() %></td>
+        <td><%= pelicula.getRating() %></td>
+        <td><%= pelicula.getDuracion() %></td>
+    </tr>
+    <% } %>
+</table>
+<%
+    } else if (buscador == 2) {
+%>
+<table border="1">
+    Reviews
+    <tr>
+        <th>Calificacion</th>
+        <th>Comentario</th>
+        <th>Fecha</th>
+    </tr>
+    <% for (Review review : reviews) { %>
+    <tr>
+        <td><%= review.getCalifica() %></td>
+        <td><%= review.getComentario() %></td>
+        <td><%= review.getFecha() %></td>
+    </tr>
+    <% } %>
+</table>
+<%
+} else if (buscador == 3) {
+%>
+<table border="1">
+    Actores
+    <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+    </tr>
+    <% for (Actor actor : actores) { %>
+    <tr>
+        <td><%= actor.getNombre() %></td>
+        <td><%= actor.getEdad() %></td>
+    </tr>
+    <% } %>
+</table>
+<%
+} else if (buscador == 4) {
+%>
+<table border="1">
+    Usuarios
+    <tr>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Tipo de Usuario</th>
+    </tr>
+    <% for (UsuarioEntity usuario : usuarios) { %>
+    <tr>
+        <td><%= usuario.getNombre() %></td>
+        <td><%= usuario.getCorreo() %></td>
+        <td><%= usuario.getTipoUsuario().getTipo() %></td>
+    </tr>
+    <% } %>
+</table>
+<%
+    }
+%>
 </body>
 </html>
