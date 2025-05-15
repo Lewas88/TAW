@@ -60,6 +60,7 @@ public class LoginControlador {
         user.setNombre(nombre);
         user.setCorreo(correo);
         user.setContrasenaHash(hashPwd);
+        // DAVID (PASARLE AQUI EL TIPO DE USUARIO PARA QUE SE CREE CORRECTAMENTE)
 
         // Guardar en la BD
         this.usuarioRepository.save(user);

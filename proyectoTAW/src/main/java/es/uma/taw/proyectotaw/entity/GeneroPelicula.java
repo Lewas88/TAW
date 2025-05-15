@@ -15,13 +15,13 @@ public class GeneroPelicula {
     private GeneroPeliculaId id;
 
     @MapsId("peliculaId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private PeliculaEntity pelicula;
+    private Pelicula pelicula;
 
     @MapsId("generoId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Genero_ID", nullable = false)
     private Genero genero;

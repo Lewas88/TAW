@@ -15,7 +15,7 @@ public class TrabajadorPelicula {
     private TrabajadorPeliculaId id;
 
     @MapsId("trabajadorId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Trabajador_ID", nullable = false)
     private Trabajador trabajador;
@@ -24,7 +24,7 @@ public class TrabajadorPelicula {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Pelicula_ID", nullable = false)
-    private PeliculaEntity pelicula;
+    private Pelicula pelicula;
 
     @Column(name = "Tipo_Trabajo", length = 50)
     private String tipoTrabajo;

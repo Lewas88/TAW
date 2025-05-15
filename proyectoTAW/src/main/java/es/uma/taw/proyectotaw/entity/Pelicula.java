@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "pelicula")
-public class PeliculaEntity {
+public class Pelicula {
     @Id
     @Column(name = "ID", nullable = false)
     private Integer id;
@@ -24,7 +24,7 @@ public class PeliculaEntity {
     private LocalDate fechaEstreno;
 
     @Lob
-    @Column(name = "Sinopsis")
+    @Column(name = "sinopsis")
     private String sinopsis;
 
     @Column(name = "Presupuesto")
@@ -39,7 +39,7 @@ public class PeliculaEntity {
     @Column(name = "Duracion")
     private Integer duracion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Usuario_ID", nullable = false, referencedColumnName = "ID")
     private UsuarioEntity usuario;
