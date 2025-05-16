@@ -1,6 +1,7 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.PeliculaRepository;
+import es.uma.taw.proyectotaw.entity.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class PeliculasControlador {
 
     @PostMapping("/ver")
     public String doVer(@RequestParam(value = "id")Integer id, Model model) {
-        PeliculaEntity pelicula = this.peliculaRepository.findById(id).orElse(null);
+        Pelicula pelicula = this.peliculaRepository.findById(id).orElse(null);
         model.addAttribute("pelicula", pelicula);
         return "verPelicula";
     }
