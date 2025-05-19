@@ -31,7 +31,7 @@ public class PeliculaEntity {
     private Integer presupuesto;
 
     @Column(name = "Ingresos")
-    private Integer ingresos;
+    private Long ingresos;
 
     @Column(name = "Rating")
     private Double rating;
