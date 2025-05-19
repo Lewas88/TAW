@@ -4,6 +4,7 @@ import es.uma.taw.proyectotaw.dao.ActorRepository;
 import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.dao.ReviewRepository;
 import es.uma.taw.proyectotaw.dao.UsuarioRepository;
+import es.uma.taw.proyectotaw.entity.PeliculaEntity;
 import es.uma.taw.proyectotaw.entity.UsuarioEntity;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/analista")
@@ -46,9 +49,42 @@ public class AnalistaController {
         return "analista";
     }
 
-    @PostMapping("/filtrar")
-    public String doFiltrar(Model model, HttpSession session, @RequestParam("entidad") String filtro) {
+    @PostMapping("/filtrarPeliculas")
+    public String doFiltrarPeliculas(Model model, HttpSession session, @RequestParam("entidad") String filtro) {
+        UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("user");
+        if (usuario == null || usuario.getTipoUsuario().getId() != 3) {
+            return "redirect:/login/";
+        }
 
+        List<PeliculaEntity> peliculasFiltradas;
+
+        switch (filtro) {
+            case "mayoresIngresos":
+                peliculasFiltradas = peliculaRepository.findTopByOrderByIngresosDesc();
+                break;
+            case "menoresIngresos":
+                peliculasFiltradas = peliculaRepository.findTopByOrderByIngresosAsc();
+                break;
+            case "mayorRating":
+                peliculasFiltradas = peliculaRepository.findTopByOrderByRatingDesc();
+                break;
+            case "fechaReciente":
+                peliculasFiltradas = peliculaRepository.findTopByOrderByFechaEstrenoDesc();
+                break;
+            default:
+                peliculasFiltradas = peliculaRepository.findAll();
+        }
+
+        model.addAttribute("peliculas", peliculasFiltradas);
+        model.addAttribute("reviews", reviewRepository.findAll());
+        model.addAttribute("actores", actorRepository.findAll());
+        model.addAttribute("usuarios", usuarioRepository.findAll());
+        model.addAttribute("totalPeliculas", peliculasFiltradas.size());
+        model.addAttribute("totalReviews", reviewRepository.count());
+        model.addAttribute("totalActores", actorRepository.count());
+        model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("buscador", 1);
         return "analista";
     }
 

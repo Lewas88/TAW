@@ -65,13 +65,56 @@
     if (buscador == 0) {
     } else if (buscador == 1){
 %>
-<form action="/filtrarPeliculas" method="post">
-    <input type="text" name="texto">
-    <input type="checkbox" name="entidad"> Peliculas
-    <input type="checkbox" name="entidad"> Reviews
-    <input type="checkbox" name="entidad"> Actores
-    <input type="checkbox" name="entidad"> Usuarios
-    <input type="submit" value="Filtrar">
+<form action="filtrarPeliculas" method="get">
+    <h3>Filtrar películas</h3>
+
+    <!-- Palabra clave en título o sinopsis -->
+    <label for="keyword">Palabra clave:</label>
+    <input type="text" name="keyword" id="keyword" />
+
+    <!-- Rango de ingresos -->
+    <label for="minIngresos">Ingresos (mín):</label>
+    <input type="number" name="minIngresos" id="minIngresos" />
+
+    <label for="maxIngresos">Ingresos (máx):</label>
+    <input type="number" name="maxIngresos" id="maxIngresos" />
+
+    <!-- Rango de presupuesto -->
+    <label for="minPresupuesto">Presupuesto (mín):</label>
+    <input type="number" name="minPresupuesto" id="minPresupuesto" />
+
+    <label for="maxPresupuesto">Presupuesto (máx):</label>
+    <input type="number" name="maxPresupuesto" id="maxPresupuesto" />
+
+    <!-- Rango de fechas -->
+    <label for="fechaInicio">Fecha desde:</label>
+    <input type="date" name="fechaInicio" id="fechaInicio" />
+
+    <label for="fechaFin">Fecha hasta:</label>
+    <input type="date" name="fechaFin" id="fechaFin" />
+
+    <!-- Rango de rating -->
+    <label for="minRating">Rating (mín):</label>
+    <input type="number" step="0.1" name="minRating" id="minRating" min="0" max="10" />
+
+    <!-- Duración -->
+    <label for="minDuracion">Duración mínima (minutos):</label>
+    <input type="number" name="minDuracion" id="minDuracion" />
+
+    <label for="maxDuracion">Duración máxima (minutos):</label>
+    <input type="number" name="maxDuracion" id="maxDuracion" />
+
+    <!-- Orden -->
+    <label for="orden">Ordenar por:</label>
+    <select name="orden" id="orden">
+        <option value="ingresosDesc">Ingresos (mayor a menor)</option>
+        <option value="ingresosAsc">Ingresos (menor a mayor)</option>
+        <option value="ratingDesc">Rating (mayor a menor)</option>
+        <option value="fechaDesc">Fecha de estreno (más reciente primero)</option>
+    </select>
+
+    <br><br>
+    <input type="submit" value="Filtrar" />
 </form>
 <table border="1">
     Peliculas
