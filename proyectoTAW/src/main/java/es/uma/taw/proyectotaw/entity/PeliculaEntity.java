@@ -39,7 +39,7 @@ public class PeliculaEntity {
     @Column(name = "Duracion")
     private Integer duracion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Usuario_ID", nullable = false, referencedColumnName = "ID")
     private UsuarioEntity usuario;

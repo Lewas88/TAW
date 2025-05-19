@@ -50,7 +50,18 @@ public class AnalistaController {
     }
 
     @PostMapping("/filtrarPeliculas")
-    public String doFiltrarPeliculas(Model model, HttpSession session, @RequestParam("entidad") String filtro) {
+    public String doFiltrarPeliculas(Model model, HttpSession session, @RequestParam(required = false) String keyword,
+                                     @RequestParam(required = false) Long minIngresos,
+                                     @RequestParam(required = false) Long maxIngresos,
+                                     @RequestParam(required = false) Long minPresupuesto,
+                                     @RequestParam(required = false) Long maxPresupuesto,
+                                     @RequestParam(required = false) String fechaInicio,
+                                     @RequestParam(required = false) String fechaFin,
+                                     @RequestParam(required = false) Double minRating,
+                                     @RequestParam(required = false) Integer minDuracion,
+                                     @RequestParam(required = false) Integer maxDuracion,
+                                     @RequestParam(required = false) String orden
+    ) {
         UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("user");
         if (usuario == null || usuario.getTipoUsuario().getId() != 3) {
             return "redirect:/login/";
@@ -58,18 +69,18 @@ public class AnalistaController {
 
         List<PeliculaEntity> peliculasFiltradas;
 
-        switch (filtro) {
+        switch (orden) {
             case "mayoresIngresos":
-                peliculasFiltradas = peliculaRepository.findTopByOrderByIngresosDesc();
+                peliculasFiltradas = peliculaRepository.obtenerPeliculasPorIngresosDesc();
                 break;
             case "menoresIngresos":
-                peliculasFiltradas = peliculaRepository.findTopByOrderByIngresosAsc();
+                peliculasFiltradas = peliculaRepository.obtenerPeliculasPorIngresosAsc();
                 break;
             case "mayorRating":
-                peliculasFiltradas = peliculaRepository.findTopByOrderByRatingDesc();
+                peliculasFiltradas = peliculaRepository.obtenerPeliculasPorRatingDesc();
                 break;
             case "fechaReciente":
-                peliculasFiltradas = peliculaRepository.findTopByOrderByFechaEstrenoDesc();
+                peliculasFiltradas = peliculaRepository.obtenerPeliculasPorFechaEstrenoDesc();
                 break;
             default:
                 peliculasFiltradas = peliculaRepository.findAll();
@@ -79,7 +90,7 @@ public class AnalistaController {
         model.addAttribute("reviews", reviewRepository.findAll());
         model.addAttribute("actores", actorRepository.findAll());
         model.addAttribute("usuarios", usuarioRepository.findAll());
-        model.addAttribute("totalPeliculas", peliculasFiltradas.size());
+        model.addAttribute("totalPeliculas", Long.valueOf(peliculasFiltradas.size()));
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());

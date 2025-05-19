@@ -65,7 +65,7 @@
     if (buscador == 0) {
     } else if (buscador == 1){
 %>
-<form action="filtrarPeliculas" method="get">
+<form action="/analista/filtrarPeliculas" method="post">
     <h3>Filtrar películas</h3>
 
     <!-- Palabra clave en título o sinopsis -->
