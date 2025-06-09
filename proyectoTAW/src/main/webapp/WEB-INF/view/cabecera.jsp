@@ -31,7 +31,7 @@
                         <a class="nav-link" href="/actores/">Actores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Trabajadores</a>
+                        <a class="nav-link" href="/trabajadores/">Trabajadores</a>
                     </li>
                     <%
                         if(user==null) {
