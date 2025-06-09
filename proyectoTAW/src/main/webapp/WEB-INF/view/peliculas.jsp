@@ -32,7 +32,7 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
+        <%-- <th></th> --%>
     </tr>
     <%
         for (Pelicula pelicula: lista) {
@@ -54,7 +54,8 @@
             <input type="submit" value="Editar"/>
         </form></td>
 
-        <%
+
+        <%--
             if(user.getTipoUsuario().getId() == 4) {
         %>
         <td><form method="post" action="/peliculas/recomendar">
@@ -63,7 +64,7 @@
         </form></td>
         <%
             }
-        %>
+        --%>
 
         <td><a href="/peliculas/borrar?id=<%= pelicula.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=pelicula.getTitulo() %>?')">Borrar</a></td>
     </tr>
