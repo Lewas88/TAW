@@ -47,6 +47,19 @@
                     <%
                         } else {//poner colorsito
                     %>
+                    <%
+                        if(user.getTipoUsuario().getId() == 1){//David
+                    %>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/usuario/lista">Usuarios</a>
+                        </li>
+                    <%
+                        }
+                    %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/usuario/ver?id=<%= user.getId() %>">Perfil</a> <!--David-->
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/login/logout">Cerrar sesión</a>
                         </li>
