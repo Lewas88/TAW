@@ -32,8 +32,4 @@ public class BaseControlador {
         String s = busqueda;
         return "redirect:/";
     }
-    /*@GetMapping("/peliculas")
-    public String doPeliculas() {
-        return "peliculas";
-    }*/
 }
