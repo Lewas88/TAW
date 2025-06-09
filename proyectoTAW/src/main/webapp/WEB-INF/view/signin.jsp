@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %><%--
   Created by IntelliJ IDEA.
-  User: julia
-  Date: 06/04/2025
-  Time: 21:56
+  User: Julian Lemus 100%
   To change this template use File | Settings | File Templates.
 --%>
 <html lang="en">
