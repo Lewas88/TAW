@@ -23,6 +23,9 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
+            <div class="mb-3">
+                <a href="/trabajadores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir trabajador <i class="bi bi-plus-circle"></i></a>
+            </div>
             <div class="row">
                 <%
                     for(Trabajador trabajador : lista) {
@@ -37,8 +40,13 @@
                             <p class="card-text"> <%= trabajador.getNombre() %> </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver</button>
-                                    <a type="button" href="/trabajadores/editar?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                    <a type="button" href="/trabajadores/ver?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">
+                                        Ver <i class="bi bi-eye"></i></a>
+                                    <a type="button" href="/trabajadores/editar?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">
+                                        Editar <i class="bi bi-pencil"></i></a>
+                                    <a type="button" href="/trabajadores/borrar?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-danger">
+                                        Borrar <i class="bi bi-trash"></i>
+                                    </a>
                                 </div>
                                 <small class="text-muted"> </small>
                             </div>

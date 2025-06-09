@@ -3,6 +3,7 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.TrabajadorRepository;
+import es.uma.taw.proyectotaw.entity.Actor;
 import es.uma.taw.proyectotaw.entity.Trabajador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,13 @@ public class TrabajadorControlador {
         List<Trabajador> trabajadores = trabajadorRepository.findAll();
         model.addAttribute("trabajador", trabajadores);
         return "trabajadores";
+    }
+
+    @GetMapping("/ver")
+    public String doVerTrabajador(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
+        Trabajador trabajador = this.trabajadorRepository.findById(id).orElse(new Trabajador());
+        model.addAttribute("trabajador", trabajador);
+        return "verTrabajador";
     }
 
     @GetMapping("/editar")
