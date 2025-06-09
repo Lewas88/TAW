@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Daniel Linares 100%
+  To change this template use File | Settings | File Templates.
+--%>
 <html>
 <head>
     <title>Home</title>

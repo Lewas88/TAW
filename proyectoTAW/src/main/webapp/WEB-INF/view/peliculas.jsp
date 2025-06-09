@@ -3,9 +3,7 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.Pelicula" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
   Created by IntelliJ IDEA.
-  User: Dalibex
-  Date: 07/04/2025
-  Time: 12:17
+  User: Daniel Linares 100%
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

@@ -1,3 +1,7 @@
+<!--
+User: Daniel Linares 100%
+-->
+
 <%@ page import="es.uma.taw.proyectotaw.entity.Pelicula" %>
 <%@ page import="java.util.List" %>
 <%@ page import="es.uma.taw.proyectotaw.controller.PeliculasControlador" %>
@@ -22,7 +26,8 @@
         <%=pelicula.getTitulo()%>
 
         <%
-            //if(user.getTipoUsuario().getId() == 4) {
+            // Activar si se quiere que solo los recomendadores hagan las reviews en las películas
+            // if(user.getTipoUsuario().getId() == 4) {
         %>
             <br>
             Añadir Review

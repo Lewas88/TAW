@@ -38,7 +38,7 @@ public class LoginControlador {
             return "login";
         }else {
             session.setAttribute("user", user);
-            return "redirect:/actores/";
+            return "redirect:/";
         }
     }
 
