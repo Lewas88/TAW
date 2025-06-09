@@ -40,7 +40,7 @@
                 <input type="hidden" name="id" value="<%= actor.getId() %>">
                 <input type="submit" value="Editar"/>
             </form></td>
-            <td><a href="/actores/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=actor.getNombre() %>?')">Borrar</a></td>
+            <td><a href="/actores/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar el actor <%=actor.getNombre() %>?')">Borrar</a></td>
         </tr>
         <%
             }

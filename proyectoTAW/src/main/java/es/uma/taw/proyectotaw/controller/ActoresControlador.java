@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/actores")
-public class ActoresControlador {
+@RequestMapping("/actores") //Julian
+public class ActoresControlador { //Julian
     @Autowired protected ActorRepository actorRepository;
-    @GetMapping("/")
+    @GetMapping("/")//Julian
     public String index(Model model) {
         List<Actor> actors = actorRepository.findAll();
         model.addAttribute("actors", actors);
         return "actores";
     }
 
-    @PostMapping("/editar")
+    @PostMapping("/editar")//Julian
     public String doEditarActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
         Actor actor = this.actorRepository.findById(id).orElse(new Actor());
         model.addAttribute("actor", actor);
         return "editarActor";
     }
-    @PostMapping("/guardar")
+    @PostMapping("/guardar")//Julian
     public String doGuardarActor(@RequestParam("id")Integer id,
                                  @RequestParam("nombre")String nombre,
                                  @RequestParam("edad")Integer edad,
@@ -40,7 +40,7 @@ public class ActoresControlador {
         this.actorRepository.save(actor);
         return "redirect:/actores/";
     }
-    @GetMapping("/borrar")
+    @GetMapping("/borrar")//Julian
     public String doBorrarActor(@RequestParam("id")Integer id) {
         this.actorRepository.deleteById(id);
         return "redirect:/actores/";

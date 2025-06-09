@@ -1,7 +1,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
   Created by IntelliJ IDEA.
-  User: guzman
+  User: Julian Lemus 50% y Daniel Linares 50%
   Date: 9/4/25
   Time: 12:24
   To change this template use File | Settings | File Templates.

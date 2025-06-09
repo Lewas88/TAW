@@ -1,6 +1,6 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
   Created by IntelliJ IDEA.
-  User: julia
+  User: Julian Lemus 100%
   Date: 26/04/2025
   Time: 17:14
   To change this template use File | Settings | File Templates.

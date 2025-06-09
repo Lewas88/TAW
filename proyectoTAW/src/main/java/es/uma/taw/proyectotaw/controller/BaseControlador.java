@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BaseControlador {
-    @GetMapping("/")
+    @GetMapping("/")//Julian
     public String doHome() {
         return "home";
     }
 
-    @PostMapping("/buscar")
+    @PostMapping("/buscar")//Julian
     public String doBuscar(@RequestParam("busqueda") String busqueda) {
         String s = busqueda;
         return "redirect:/";
