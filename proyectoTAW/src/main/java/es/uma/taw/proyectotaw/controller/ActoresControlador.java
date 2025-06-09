@@ -1,6 +1,7 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.ActorRepository;
+import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,17 +17,28 @@ import java.util.List;
 @RequestMapping("/actores") //Julian
 public class ActoresControlador { //Julian
     @Autowired protected ActorRepository actorRepository;
+
+    @Autowired protected PeliculaRepository  peliculaRepository;
+
     @GetMapping("/")//Julian
-    public String index(Model model) {
+    public String doListarActores(Model model) {
         List<Actor> actors = actorRepository.findAll();
         model.addAttribute("actors", actors);
         return "actores";
     }
 
-    @PostMapping("/editar")//Julian
+    @GetMapping("/ver")//Julian
+    public String doVerActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
+        Actor actor = this.actorRepository.findById(id).orElse(new Actor());
+        model.addAttribute("actor", actor);
+        return "verActor";
+    }
+
+    @GetMapping("/editar")//Julian
     public String doEditarActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
         Actor actor = this.actorRepository.findById(id).orElse(new Actor());
         model.addAttribute("actor", actor);
+        model.addAttribute("peliculas", this.peliculaRepository.findAll());
         return "editarActor";
     }
     @PostMapping("/guardar")//Julian

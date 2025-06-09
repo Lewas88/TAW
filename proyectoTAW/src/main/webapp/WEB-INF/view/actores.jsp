@@ -16,35 +16,50 @@
 </head>
 <body>
 <jsp:include page="cabecera.jsp" />
+<main>
+    <section class="jumbotron text-center">
+        <div class="container">
+        </div>
+    </section>
 
-<h1>Catálogo de Actores disponibles</h1>
-    <form method="post" action="/actores/editar">
-        <input type="submit" value="Añadir"/>
-    </form>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>NOMBRE</th>
-            <th>EDAD</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <%
-            for (Actor actor: lista) {
-        %>
-        <tr>
-            <td><%= actor.getId() %></td>
-            <td><%= actor.getNombre() %></td>
-            <td><%= actor.getEdad() %></td>
-            <td><form method="post" action="/actores/editar">
-                <input type="hidden" name="id" value="<%= actor.getId() %>">
-                <input type="submit" value="Editar"/>
-            </form></td>
-            <td><a href="/actores/borrar?id=<%= actor.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar el actor <%=actor.getNombre() %>?')">Borrar</a></td>
-        </tr>
-        <%
-            }
-        %>
-    </table>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="mb-3">
+                <a href="/actores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir actor <i class="bi bi-plus-circle"></i></a>
+            </div>
+            <div class="row">
+                <%
+                    for(Actor actor: lista){
+                %>
+                <div class="col-md-3">
+                    <div class="card mb-4"
+                         onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='10px 10px 3px rgba(0,0,0,0.1)';"
+                         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)';"
+                         style="transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                        <img class="card-img-top" style="height: 100%; width: 100%; display: block;" src="/images/vacio.png" data-holder-rendered="true">
+                        <div class="card-body">
+                            <p class="card-text"><%=actor.getNombre()%></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a type="button" href="/actores/ver?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
+                                        Ver <i class="bi bi-eye"></i></a>
+                                    <a type="button" href="/actores/editar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
+                                        Editar <i class="bi bi-pencil"></i></a>
+                                    <a type="button" href="/actores/borrar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-danger">
+                                        Borrar <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+            </div>
+        </div>
+    </div>
+</main>
+<jsp:include page="piedepagina.jsp" />
 </body>
 </html>
