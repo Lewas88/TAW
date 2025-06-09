@@ -1,9 +1,11 @@
-// Daniel Linares 100%
+// Daniel Linares y Enrique Silveira
 
 package es.uma.taw.proyectotaw.controller;
 
+import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.dao.TrabajadorRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
+import es.uma.taw.proyectotaw.entity.Pelicula;
 import es.uma.taw.proyectotaw.entity.Trabajador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ import java.util.List;
 public class TrabajadorControlador {
     @Autowired
     protected TrabajadorRepository trabajadorRepository;
+    @Autowired
+    protected PeliculaRepository peliculaRepository;
+
     @GetMapping("/")
     public String listarTrabajadores(Model model) {
         List<Trabajador> trabajadores = trabajadorRepository.findAll();
@@ -27,10 +32,12 @@ public class TrabajadorControlador {
         return "trabajadores";
     }
 
-    @GetMapping("/ver")
+    @GetMapping("/ver")//Enrique y Daniel
     public String doVerTrabajador(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
         Trabajador trabajador = this.trabajadorRepository.findById(id).orElse(new Trabajador());
+        List<Pelicula> peliculasParticipadas = this.peliculaRepository.findPeliculasByTrabajadorId(id);
         model.addAttribute("trabajador", trabajador);
+        model.addAttribute("peliculas", peliculasParticipadas);
         return "verTrabajador";
     }
 

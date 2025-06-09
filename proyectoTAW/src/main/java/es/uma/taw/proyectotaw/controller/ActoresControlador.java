@@ -3,6 +3,7 @@ package es.uma.taw.proyectotaw.controller;
 import es.uma.taw.proyectotaw.dao.ActorRepository;
 import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
+import es.uma.taw.proyectotaw.entity.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+
+//Julian y Enrique
 
 @Controller
 @RequestMapping("/actores") //Julian
@@ -27,10 +30,12 @@ public class ActoresControlador { //Julian
         return "actores";
     }
 
-    @GetMapping("/ver")//Julian
+    @GetMapping("/ver")//Julian y Enrique
     public String doVerActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
         Actor actor = this.actorRepository.findById(id).orElse(new Actor());
+        List<Pelicula> peliculasParticipadas = peliculaRepository.findPeliculasByActorId(id);
         model.addAttribute("actor", actor);
+        model.addAttribute("peliculasParticipadas", peliculasParticipadas);
         return "verActor";
     }
 

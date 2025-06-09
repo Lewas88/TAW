@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
-// Daniel Linares 100%
+// Daniel Linares y Enrique Silveira
 
 @Controller
 @RequestMapping("/peliculas")
@@ -75,6 +75,39 @@ public class PeliculasControlador {
         Integer idPelicula = review.getPelicula().getId();
         reviewRepository.delete(review);
         return "redirect:/peliculas/ver?id=" + idPelicula;
+    }
+
+    @GetMapping("/editar")
+    public String doEditarPelicula(@RequestParam(value = "id", defaultValue = "-1") Integer id, Model model) {
+        Pelicula pelicula = this.peliculaRepository.findById(id).orElse(new Pelicula());
+        model.addAttribute("pelicula", pelicula);
+        return "editarPelicula";
+    }
+
+    @PostMapping("/guardar")
+    public String doGuardarPelicula(
+            @RequestParam("id") Integer id,
+            @RequestParam("titulo") String titulo,
+            @RequestParam("sinopsis") String sinopsis,
+            @RequestParam("estreno") String estreno,
+            @RequestParam("duracion") Integer duracion,
+            @RequestParam("presupuesto") Integer presupuesto,
+            @RequestParam("ingresos") Long ingresos,
+            Model model
+    ) {
+        Pelicula pelicula = this.peliculaRepository.findById(id).orElse(new Pelicula());
+        pelicula.setTitulo(titulo);
+        pelicula.setSinopsis(sinopsis);
+        pelicula.setDuracion(duracion);
+        pelicula.setPresupuesto(presupuesto);
+        pelicula.setIngresos(ingresos);
+        if (estreno != null && !estreno.isEmpty()) {
+            pelicula.setFechaEstreno(java.time.LocalDate.parse(estreno));
+        }
+        this.peliculaRepository.save(pelicula);
+
+        int nuevoid = pelicula.getId();
+        return "redirect:/peliculas/ver?id=" + nuevoid;
     }
 }
 

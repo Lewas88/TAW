@@ -1,10 +1,6 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
 <%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: Dalibex
-  Date: 07/04/2025
-  Time: 12:17
-  To change this template use File | Settings | File Templates.
+  REALIZADO POR DANIEL LINARES Y ENRIQUE SILVEIRA
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -24,9 +20,11 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-            <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="mb-0">Listado de actores:</h1>
                 <a href="/actores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir actor <i class="bi bi-plus-circle"></i></a>
             </div>
+
             <div class="row">
                 <%
                     for(Actor actor: lista){

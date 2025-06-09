@@ -1,11 +1,12 @@
+<!--
+User: Enrique Silveira
+-->
+
+
 <%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
 <%@ page import="java.util.List" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.Pelicula" %>
-<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
-  Created by IntelliJ IDEA.
-  User: Daniel Linares 100%
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,63 +15,60 @@
         UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
     %>
     <title>Catálogo de Películas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="cabecera.jsp" />
 
-<h1>Catálogo de peliculas disponibles</h1>
-<form method="post" action="/peliculas/añadir">
-    <input type="submit" value="Añadir"/>
-</form>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>TÍTULO</th>
-        <th>FECHA_ESTRENO</th>
-        <th>RATING</th>
-        <th>DURACION</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <%-- <th></th> --%>
-    </tr>
-    <%
-        for (Pelicula pelicula: lista) {
-    %>
-    <tr>
-        <td><%= pelicula.getId() %></td>
-        <td><%= pelicula.getTitulo() %></td>
-        <td><%= pelicula.getFechaEstreno() %></td>
-        <td><%= pelicula.getRating() %> </td>
-        <td><%= pelicula.getDuracion() %> </td>
+<main class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="mb-0">Catálogo de películas disponibles</h1>
+        <form method="post" action="/peliculas/añadir">
+            <a href="/peliculas/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir pelicula <i class="bi bi-plus-circle"></i></a>
+        </form>
+    </div>
+    <div class="album py-3 bg-light">
+        <div class="container">
+            <div class="row">
+                <%
+                    for (Pelicula pelicula : lista) {
+                %>
+                <div class="col-md-3">
+                    <div class="card mb-4"
+                         onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='10px 10px 3px rgba(0,0,0,0.1)';"
+                         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.2)';"
+                         style="transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                        <img class="card-img-top" style="height: 250px; width: 100%; object-fit: cover;" src="/images/vacio.png" alt="Imagen película">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= pelicula.getTitulo() %></h5>
+                            <p class="card-text mb-1"><small class="text-muted">Estreno: <%= pelicula.getFechaEstreno() %></small></p>
+                            <p class="card-text mb-1"><strong>Rating:</strong> <%= pelicula.getRating() %></p>
+                            <p class="card-text mb-1"><strong>Duración:</strong> <%= pelicula.getDuracion() %> min</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="btn-group">
+                                    <a type="button" href="/peliculas/ver?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">
+                                        Ver <i class="bi bi-eye"></i></a>
+                                    <a type="button" href="/peliculas/editar?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">
+                                        Editar <i class="bi bi-pencil"></i></a>
+                                    <a href="/peliculas/borrar?id=<%= pelicula.getId() %>"
+                                       onclick="return confirm('¿Está seguro de que quiere borrar la película <%=pelicula.getTitulo() %>?')"
+                                       class="btn btn-sm btn-outline-danger">
+                                        Borrar <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+            </div>
+        </div>
+    </div>
+</main>
 
-        <td><form method="get" action="/peliculas/ver">
-            <input type="hidden" name="id" value="<%= pelicula.getId() %>">
-            <input type="submit" value="Ver"/>
-        </form></td>
-
-        <td><form method="post" action="/peliculas/editar">
-            <input type="hidden" name="id" value="<%= pelicula.getId() %>">
-            <input type="submit" value="Editar"/>
-        </form></td>
-
-
-        <%--
-            if(user.getTipoUsuario().getId() == 4) {
-        %>
-        <td><form method="post" action="/peliculas/recomendar">
-            <input type="hidden" name="id" value="<%= pelicula.getId() %>">
-            <input type="submit" value="Recomendar"/>
-        </form></td>
-        <%
-            }
-        --%>
-
-        <td><a href="/peliculas/borrar?id=<%= pelicula.getId() %>"  onclick="return confirm('¿Está seguro de que quiere borrar la película <%=pelicula.getTitulo() %>?')">Borrar</a></td>
-    </tr>
-    <%
-        }
-    %>
-</table>
+<jsp:include page="piedepagina.jsp" />
 </body>
 </html>
