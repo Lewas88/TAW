@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 
+// Daniel Linares 100%
+
 @Controller
 @RequestMapping("/peliculas")
 public class PeliculasControlador {

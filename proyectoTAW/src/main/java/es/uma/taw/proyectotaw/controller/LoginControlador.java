@@ -42,7 +42,7 @@ public class LoginControlador {
         }
     }
 
-    @PostMapping("/registra")//Julian
+    @PostMapping("/registra")//Julian y Daniel
     public String doRegister(@RequestParam("nombre")String nombre,
                              @RequestParam("correo")String correo,
                              @RequestParam("contrasena")String contrasena,
@@ -67,7 +67,7 @@ public class LoginControlador {
 
         return "redirect:/login/";
     }
-    //Julian
+    //Julian y Daniel
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
