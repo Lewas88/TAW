@@ -1,6 +1,8 @@
 package es.uma.taw.proyectotaw.controller;
 
+import es.uma.taw.proyectotaw.dao.TipoUsuarioRepository;
 import es.uma.taw.proyectotaw.dao.UsuarioRepository;
+import es.uma.taw.proyectotaw.entity.TipoUsuario;
 import es.uma.taw.proyectotaw.entity.UsuarioEntity;
 import es.uma.taw.proyectotaw.ui.Usuario;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +18,7 @@ import java.security.MessageDigest;
 @RequestMapping("/login")//Julian
 public class LoginControlador {
     @Autowired private UsuarioRepository usuarioRepository;
+    @Autowired private TipoUsuarioRepository tipoUsuarioRepository;
 
     @GetMapping("/")//Julian
     public String doInit(HttpSession session, Model model) {
@@ -42,7 +45,7 @@ public class LoginControlador {
         }
     }
 
-    @PostMapping("/registra")//Julian y Daniel
+    @PostMapping("/registra")//Julian Enrique y Daniel
     public String doRegister(@RequestParam("nombre")String nombre,
                              @RequestParam("correo")String correo,
                              @RequestParam("contrasena")String contrasena,
@@ -60,8 +63,9 @@ public class LoginControlador {
         user.setNombre(nombre);
         user.setCorreo(correo);
         user.setContrasenaHash(hashPwd);
-        // DAVID (PASARLE AQUI EL TIPO DE USUARIO PARA QUE SE CREE CORRECTAMENTE)
-
+        //Enrique
+        TipoUsuario estandar = tipoUsuarioRepository.findById(2).orElse(null);
+        user.setTipoUsuario(estandar);
         // Guardar en la BD
         this.usuarioRepository.save(user);
 
