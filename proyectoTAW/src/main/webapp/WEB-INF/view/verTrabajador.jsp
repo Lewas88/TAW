@@ -5,12 +5,18 @@
   Time: 12:40
   To change this template use File | Settings | File Templates.
 --%>
-<%-- Daniel Linares 100% --%>
+<%-- Daniel Linares y Enrique Silveira --%>
 
 <%@ page import="es.uma.taw.proyectotaw.entity.Trabajador" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.Pelicula" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Trabajador trabajador = (Trabajador) request.getAttribute("trabajador");
+    List<Pelicula> peliculas = (List<Pelicula>) request.getAttribute("peliculas");
+    if (peliculas == null) {
+        peliculas = java.util.Collections.emptyList();
+    }
 %>
 <html>
 <head>
@@ -22,7 +28,7 @@
 <main class="container mt-4">
     <!-- Botón volver -->
     <div class="mb-3">
-        <a href="/actores/" class="btn btn-sm btn-outline-secondary">&larr; Volver</a>
+        <a href="/trabajadores/" class="btn btn-sm btn-outline-secondary">&larr; Volver</a>
     </div>
 
     <!-- Contenedor imagen + formulario -->
@@ -46,6 +52,26 @@
 
                 <div class="mb-3">
                         <label class="form-label">Departamento: <%= trabajador.getDepartamento()%></label>
+                </div>
+
+                <div class="mb-4">
+                    <h5>Películas en las que ha participado</h5>
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Fecha de estreno</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for (Pelicula peli : peliculas) { %>
+                                <tr>
+                                    <td><%= peli.getTitulo() %></td>
+                                    <td><%= peli.getFechaEstreno() %></td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div >
