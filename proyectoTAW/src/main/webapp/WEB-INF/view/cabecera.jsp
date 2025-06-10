@@ -52,7 +52,7 @@
                     %>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/usuario/lista">Usuarios</a>
+                            <a class="nav-link" href="/usuario/">Usuarios</a>
                         </li>
                     <%
                         }

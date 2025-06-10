@@ -2,7 +2,9 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.ReviewRepository;
+import es.uma.taw.proyectotaw.dao.TipoUsuarioRepository;
 import es.uma.taw.proyectotaw.dao.UsuarioRepository;
+import es.uma.taw.proyectotaw.entity.TipoUsuario;
 import es.uma.taw.proyectotaw.entity.Trabajador;
 import es.uma.taw.proyectotaw.entity.UsuarioEntity;
 import org.springframework.ui.Model;
@@ -20,7 +22,10 @@ import java.util.List;
 @RequestMapping("/usuario")
 public class UsuarioControlador {
     @Autowired protected UsuarioRepository usuarioRepository;
-    @GetMapping("/lista")
+    @Autowired
+    private TipoUsuarioRepository tipoUsuarioRepository;
+
+    @GetMapping("/")
     public String doListaUsuario(HttpSession session, Model model) {
         UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
         model.addAttribute("user",user);
@@ -32,17 +37,40 @@ public class UsuarioControlador {
 
     @GetMapping("/ver")
     public String doVerPerfil(@RequestParam(value = "id")Integer id, HttpSession session, Model model) {
+        UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(new UsuarioEntity());
         UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        List<TipoUsuario> tipoUsuarios = this.tipoUsuarioRepository.findAll();
         model.addAttribute("user",user);
+        model.addAttribute("tipoUsuarios",tipoUsuarios);
+        model.addAttribute("usuario", usuario);
         return "verUsuario";
     }
     @GetMapping("/editar")
-    public String doEditarUsuario(@RequestParam(value = "id")Integer id, HttpSession session, Model model) {
+    public String doEditarUsuario(@RequestParam(value = "id" , defaultValue = "-1" )Integer id, Model model) {
         UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(new UsuarioEntity());
-        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
+        List<TipoUsuario> tipoUsuarios = this.tipoUsuarioRepository.findAll();
+        model.addAttribute("tipoUsuarios",tipoUsuarios);
         model.addAttribute("usuario", usuario);
         return "editarUsuario";
     }
 
+    @PostMapping("/guardar")
+    public String doGuardarUsuario(@RequestParam("id")Integer id,
+                                      @RequestParam("nombre")String nombre,
+                                      @RequestParam("correo")String correo,
+                                      @RequestParam("tipoUsuario") TipoUsuario tipoUsuario,
+                                      Model model) {
+        UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(new UsuarioEntity());
+        usuario.setNombre(nombre);
+        usuario.setCorreo(correo);
+        usuario.setTipoUsuario(tipoUsuario);
+        this.usuarioRepository.save(usuario);
+        return "redirect:/usuario/";
+    }
+
+    @GetMapping("/borrar")
+    public String doBorrarUsuario(@RequestParam("id")Integer id) {
+        this.usuarioRepository.deleteById(id);
+        return "redirect:/usuario/";
+    }
 }
