@@ -46,9 +46,11 @@ public class UsuarioControlador {
         return "verUsuario";
     }
     @GetMapping("/editar")
-    public String doEditarUsuario(@RequestParam(value = "id" , defaultValue = "-1" )Integer id, Model model) {
+    public String doEditarUsuario(@RequestParam(value = "id" , defaultValue = "-1" )Integer id, HttpSession session, Model model) {
         UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(new UsuarioEntity());
         List<TipoUsuario> tipoUsuarios = this.tipoUsuarioRepository.findAll();
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
         model.addAttribute("tipoUsuarios",tipoUsuarios);
         model.addAttribute("usuario", usuario);
         return "editarUsuario";

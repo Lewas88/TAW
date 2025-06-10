@@ -1,4 +1,4 @@
-// Daniel Linares y Enrique Silveira
+// Daniel Linares, Enrique Silveira y David Vilaseca
 
 package es.uma.taw.proyectotaw.controller;
 
@@ -7,6 +7,8 @@ import es.uma.taw.proyectotaw.dao.TrabajadorRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
 import es.uma.taw.proyectotaw.entity.Pelicula;
 import es.uma.taw.proyectotaw.entity.Trabajador;
+import es.uma.taw.proyectotaw.entity.UsuarioEntity;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +34,12 @@ public class TrabajadorControlador {
         return "trabajadores";
     }
 
-    @GetMapping("/ver")//Enrique y Daniel
-    public String doVerTrabajador(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
+    @GetMapping("/ver")//Enrique, Daniel y David
+    public String doVerTrabajador(@RequestParam(value = "id", defaultValue = "-1" )Integer id, HttpSession session, Model model) {
         Trabajador trabajador = this.trabajadorRepository.findById(id).orElse(new Trabajador());
         List<Pelicula> peliculasParticipadas = this.peliculaRepository.findPeliculasByTrabajadorId(id);
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
         model.addAttribute("trabajador", trabajador);
         model.addAttribute("peliculas", peliculasParticipadas);
         return "verTrabajador";

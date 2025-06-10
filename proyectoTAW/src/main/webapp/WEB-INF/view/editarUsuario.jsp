@@ -12,14 +12,12 @@
 <%
   boolean isEditar = true;
   UsuarioEntity usuario = (UsuarioEntity) request.getAttribute("usuario");
+  UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
   List<TipoUsuario> lista = (List<TipoUsuario>) request.getAttribute("tipoUsuarios");
   if (usuario.getId() == null) isEditar = false;
 %>
 <html>
 <head>
-  <%
-    UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
-  %>
     <title><%= (isEditar ? "Editar" : "Añadir") %> Usuario</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -57,11 +55,33 @@
                    value="<%= (usuario.getCorreo() == null) ? "" : usuario.getCorreo() %>" required>
           </div>
 
+
+
+          <% if (user.getTipoUsuario().getId() == 1) { %>
           <div class="mb-3">
             <label class="form-label">Tipo Usuario</label>
-            <input type="text" class="form-control" name="tipoUsuario"
-                   value="<%= (usuario.getTipoUsuario().getTipo() == null) ? "" : usuario.getTipoUsuario().getTipo() %>" required>
+            <select class="form-select" name="tipoUsuario" required>
+              <%
+                for(TipoUsuario tipo : lista) {
+                  if (tipo != null && tipo.getTipo() != null) {
+                    boolean isSelected = (usuario.getTipoUsuario().getTipo()).equals(tipo.getTipo());
+              %>
+              <option value="<%=tipo.getId()%>" <%= isSelected ? "selected" : "" %>>
+                <%=tipo.getTipo()%>
+              </option>
+              <%
+                  }
+                }
+              %>
+            </select>
           </div>
+          <% } else { %>
+          <div class="mb-3">
+            <label class="form-label">Tipo Usuario</label>
+            <input readonly type="text" class="form-control" name="tipoUsuario"
+                   value="<%= usuario.getTipoUsuario().getTipo() %>" required>
+          </div>
+          <% } %>
 
           <div class="d-grid">
             <button type="submit" class="btn btn-primary">Guardar</button>

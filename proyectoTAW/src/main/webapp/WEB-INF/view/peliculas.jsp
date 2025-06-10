@@ -24,9 +24,15 @@ User: Enrique Silveira
 <main class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="mb-0">Catálogo de películas disponibles</h1>
+        <%
+            if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+        %>
         <form method="post" action="/peliculas/añadir">
             <a href="/peliculas/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir pelicula <i class="bi bi-plus-circle"></i></a>
         </form>
+        <%
+            }
+        %>
     </div>
     <div class="album py-3 bg-light">
         <div class="container">
@@ -49,13 +55,23 @@ User: Enrique Silveira
                                 <div class="btn-group">
                                     <a type="button" href="/peliculas/ver?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Ver <i class="bi bi-eye"></i></a>
+                                    <%
+                                        if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+                                    %>
                                     <a type="button" href="/peliculas/editar?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Editar <i class="bi bi-pencil"></i></a>
+                                    <%
+                                        }
+                                        if (user.getTipoUsuario().getId() == 1) { //David
+                                    %>
                                     <a href="/peliculas/borrar?id=<%= pelicula.getId() %>"
                                        onclick="return confirm('¿Está seguro de que quiere borrar la película <%=pelicula.getTitulo() %>?')"
                                        class="btn btn-sm btn-outline-danger">
                                         Borrar <i class="bi bi-trash"></i>
                                     </a>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                             </div>
                         </div>

@@ -42,34 +42,27 @@
               <form action="/usuario/guardar" method="post">
                 <input type="hidden" name="id" value="<%= (usuario.getId() == null) ? -1 : usuario.getId() %>">
 
-                <div class="mb-3">
-                  <label class="form-label">Nombre</label>
-                  <input type="text" class="form-control" name="nombre"
-                         value="<%= (usuario.getNombre() == null) ? "" : usuario.getNombre() %>" required>
-                </div>
+                <table class="table border-0" style="border: none;">
+                  <tr>
+                    <td class="fw-bold" style="border: none; width: 100px;">Nombre:</td>
+                    <td style="border: none;"><%= usuario.getNombre() %></td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold" style="border: none;">Correo:</td>
+                    <td style="border: none;"><%= usuario.getCorreo() %></td>
+                  </tr>
+                  <tr>
+                    <td class="fw-bold" style="border: none;">Tipo de Usuario:</td>
+                    <td style="border: none;"><%= usuario.getTipoUsuario().getTipo()%></td>
+                  </tr>
+                </table>
 
-                <div class="mb-3">
-                  <label class="form-label">Correo</label>
-                  <input type="text" class="form-control" name="correo"
-                         value="<%= (usuario.getCorreo() == null) ? "" : usuario.getCorreo() %>" required>
-                </div>
-
-                <div class="mb-3">
-                  <label class="form-label">Tipo Usuario</label>
-                  <input type="text" class="form-control" name="tipoUsuario"
-                         value="<%= (usuario.getTipoUsuario().getTipo() == null) ? "" : usuario.getTipoUsuario().getTipo() %>" required>
-                </div>
-                <%
-                  if (user.getTipoUsuario().getId() == 1) {
-                %>
                 <div >
                   <a href="/usuario/editar?id=<%=usuario.getId()%>" class="btn btn-primary">
                     Editar <i class="bi bi-pencil"></i>
                   </a>
                 </div>
-                <%
-                  }
-                %>
+
               </form>
             </div>
           </div>
