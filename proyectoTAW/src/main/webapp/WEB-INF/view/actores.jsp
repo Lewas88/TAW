@@ -1,17 +1,11 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
-<%@ page import="java.util.List" %>
-<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
-  Created by IntelliJ IDEA.
-  User: Dalibex
-  Date: 07/04/2025
-  Time: 12:17
-  To change this template use File | Settings | File Templates.
+<%@ page import="java.util.List" %><%--
+  REALIZADO POR DANIEL LINARES Y ENRIQUE SILVEIRA
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <%
-        UsuarioEntity user = (UsuarioEntity)session.getAttribute("user");
         List<Actor> lista = (List<Actor>) request.getAttribute("actors");
     %>
     <title>Catálogo de Actores</title>
@@ -26,15 +20,11 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-            <%
-                if(user.getTipoUsuario().getId() ==1 || user.getTipoUsuario().getId() ==3){//David
-            %>
-            <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="mb-0">Listado de actores:</h1>
                 <a href="/actores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir actor <i class="bi bi-plus-circle"></i></a>
             </div>
-            <%
-                }
-            %>
+
             <div class="row">
                 <%
                     for(Actor actor: lista){
@@ -51,21 +41,11 @@
                                 <div class="btn-group">
                                     <a type="button" href="/actores/ver?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Ver <i class="bi bi-eye"></i></a>
-                                    <%
-                                        if(user.getTipoUsuario().getId() ==1 || user.getTipoUsuario().getId() ==3){//David
-                                    %>
                                     <a type="button" href="/actores/editar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Editar <i class="bi bi-pencil"></i></a>
-                                    <%
-                                        }
-                                        if(user.getTipoUsuario().getId() ==1){//David
-                                    %>
                                     <a type="button" href="/actores/borrar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-danger">
                                         Borrar <i class="bi bi-trash"></i>
                                     </a>
-                                    <%
-                                        }
-                                    %>
                                 </div>
                             </div>
                         </div>
