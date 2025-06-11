@@ -36,7 +36,7 @@ public class LoginControlador {
         if (user == null) {
             model.addAttribute("error", "Incorrecto");
             return "login";
-        }else {
+        } else {
             session.setAttribute("user", user);
             return "redirect:/";
         }

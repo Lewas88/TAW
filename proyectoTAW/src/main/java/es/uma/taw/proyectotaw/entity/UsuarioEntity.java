@@ -26,8 +26,4 @@ public class UsuarioEntity {
     @Column(name = "Contrasena_Hash")
     private String contrasenaHash;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Tipo_Usuario_ID", nullable = false)
-    private TipoUsuario tipoUsuario;
-
 }
