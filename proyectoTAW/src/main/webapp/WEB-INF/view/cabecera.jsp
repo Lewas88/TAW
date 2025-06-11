@@ -1,7 +1,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
   Created by IntelliJ IDEA.
-  User: guzman
+  User: Julian Lemus 50% y Daniel Linares 50%
   Date: 9/4/25
   Time: 12:24
   To change this template use File | Settings | File Templates.
@@ -15,6 +15,8 @@
 
     <!--<link href="/styles/cabecera.css" rel="stylesheet">-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -28,7 +30,10 @@
                         <a class="nav-link" href="/peliculas/">Peliculas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Series</a>
+                        <a class="nav-link" href="/actores/">Actores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/trabajadores/">Trabajadores</a>
                     </li>
                     <%
                         if(user==null) {
@@ -37,7 +42,7 @@
                             <a class="nav-link" href="/login/">Iniciar sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login/signIn">Registrarse</a>
+                            <a class="nav-link" href="/login/signIn">Registrarse</a>
                         </li>
                     <%
                         } else {//poner colorsito

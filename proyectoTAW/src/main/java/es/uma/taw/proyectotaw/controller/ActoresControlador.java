@@ -1,6 +1,7 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.ActorRepository;
+import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,23 +14,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/actores")
-public class ActoresControlador {
+@RequestMapping("/actores") //Julian
+public class ActoresControlador { //Julian
     @Autowired protected ActorRepository actorRepository;
-    @GetMapping("/")
-    public String index(Model model) {
+
+    @Autowired protected PeliculaRepository  peliculaRepository;
+
+    @GetMapping("/")//Julian
+    public String doListarActores(Model model) {
         List<Actor> actors = actorRepository.findAll();
         model.addAttribute("actors", actors);
         return "actores";
     }
 
-    @PostMapping("/editar")
+    @GetMapping("/ver")//Julian
+    public String doVerActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
+        Actor actor = this.actorRepository.findById(id).orElse(new Actor());
+        model.addAttribute("actor", actor);
+        return "verActor";
+    }
+
+    @GetMapping("/editar")//Julian
     public String doEditarActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
         Actor actor = this.actorRepository.findById(id).orElse(new Actor());
         model.addAttribute("actor", actor);
+        model.addAttribute("peliculas", this.peliculaRepository.findAll());
         return "editarActor";
     }
-    @PostMapping("/guardar")
+    @PostMapping("/guardar")//Julian
     public String doGuardarActor(@RequestParam("id")Integer id,
                                  @RequestParam("nombre")String nombre,
                                  @RequestParam("edad")Integer edad,
@@ -40,7 +52,7 @@ public class ActoresControlador {
         this.actorRepository.save(actor);
         return "redirect:/actores/";
     }
-    @GetMapping("/borrar")
+    @GetMapping("/borrar")//Julian
     public String doBorrarActor(@RequestParam("id")Integer id) {
         this.actorRepository.deleteById(id);
         return "redirect:/actores/";

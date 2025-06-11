@@ -14,6 +14,7 @@ import lombok.Setter;
 public class Actor {
     @Id
     @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "Nombre", length = 100)

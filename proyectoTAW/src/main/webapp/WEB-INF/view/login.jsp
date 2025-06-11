@@ -1,38 +1,40 @@
+<%-- Daniel Linares 50% Julian David Lemus 50% --%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %><%--
-  Created by IntelliJ IDEA.
-  User: julia
-  Date: 06/04/2025
-  Time: 21:56
-  To change this template use File | Settings | File Templates.
---%>
-<html lang="en">
-<head>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String error = (String) request.getAttribute("error");
 %>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <title>Iniciar sesión</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Iniciar sesión</h1>
-<form:form action="autentica" method="post" modelAttribute="usuario">
-    <table>
-        <tr>
-            <td>Correo:</td>
-            <td><form:input path="correo" />
-            </td>
-        </tr>
-        <tr>
-            <td>Contraseña:</td>
-            <td><form:password path="password"/></td>
-        </tr>
-        <tr>
-            <td colspan="2"> <form:button> Enviar </form:button></td>
-        </tr>
-    </table>
-</form:form>
-<%= (error!=null)? error: ""%>
+<jsp:include page="cabecera.jsp" />
+
+<main class="container my-5" style="max-width: 400px;">
+    <h1 class="mb-4 text-center">Iniciar sesión</h1>
+
+    <% if (error != null) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+    <% } %>
+
+    <form:form action="autentica" method="post" modelAttribute="usuario">
+        <div class="form-group">
+            <label for="correo">Correo:</label>
+            <form:input path="correo" cssClass="form-control" id="correo"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <form:password path="password" cssClass="form-control" id="password"/>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+    </form:form>
+</main>
+
+<jsp:include page="piedepagina.jsp" />
 </body>
 </html>

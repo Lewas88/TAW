@@ -3,8 +3,6 @@ package es.uma.taw.proyectotaw.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -12,8 +10,9 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "pelicula")
-public class PeliculaEntity {
+public class Pelicula {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Integer id;
 
@@ -24,7 +23,7 @@ public class PeliculaEntity {
     private LocalDate fechaEstreno;
 
     @Lob
-    @Column(name = "Sinopsis")
+    @Column(name = "Sinopsis" , columnDefinition = "TEXT")
     private String sinopsis;
 
     @Column(name = "Presupuesto")
@@ -38,10 +37,5 @@ public class PeliculaEntity {
 
     @Column(name = "Duracion")
     private Integer duracion;
-
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "Usuario_ID", nullable = false, referencedColumnName = "ID")
-    private UsuarioEntity usuario;
 
 }

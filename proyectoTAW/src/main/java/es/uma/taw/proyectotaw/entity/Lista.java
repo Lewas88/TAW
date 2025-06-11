@@ -21,13 +21,13 @@ public class Lista {
     private String nombre;
 
     @Lob
-    @Column(name = "Descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "Fecha_Creacion")
     private LocalDate fechaCreacion;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "Usuario_ID", nullable = false)
     private UsuarioEntity usuario;

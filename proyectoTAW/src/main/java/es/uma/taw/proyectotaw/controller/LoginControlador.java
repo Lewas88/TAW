@@ -13,22 +13,22 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/login")//Julian
 public class LoginControlador {
     @Autowired private UsuarioRepository usuarioRepository;
 
-    @GetMapping("/")
+    @GetMapping("/")//Julian
     public String doInit(HttpSession session, Model model) {
         model.addAttribute("usuario", new Usuario());
         return "login";
     }
 
-    @GetMapping("/signIn")
+    @GetMapping("/signIn")//Julian
     public String doSignIn() {
         return "signin";
     }
 
-    @PostMapping("/autentica")
+    @PostMapping("/autentica")//Julian
     public String doLogIn(@ModelAttribute Usuario usuario, HttpSession session, Model model) {
         String pwd = usuario.getPassword();
         String hashPwd = hashPassword(pwd);
@@ -38,11 +38,11 @@ public class LoginControlador {
             return "login";
         }else {
             session.setAttribute("user", user);
-            return "redirect:/actores/";
+            return "redirect:/";
         }
     }
 
-    @PostMapping("/registra")
+    @PostMapping("/registra")//Julian y Daniel
     public String doRegister(@RequestParam("nombre")String nombre,
                              @RequestParam("correo")String correo,
                              @RequestParam("contrasena")String contrasena,
@@ -60,13 +60,14 @@ public class LoginControlador {
         user.setNombre(nombre);
         user.setCorreo(correo);
         user.setContrasenaHash(hashPwd);
+        // DAVID (PASARLE AQUI EL TIPO DE USUARIO PARA QUE SE CREE CORRECTAMENTE)
 
         // Guardar en la BD
         this.usuarioRepository.save(user);
 
         return "redirect:/login/";
     }
-
+    //Julian y Daniel
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -81,7 +82,7 @@ public class LoginControlador {
         }
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/logout")//Julian
     public String doLogOut(HttpSession session){
         session.invalidate();
         return "redirect:/";
