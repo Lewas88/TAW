@@ -37,6 +37,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
             @Param("maxDuracion") Integer maxDuracion
     );
 
-
+    @Query("SELECT COUNT(p) FROM Pelicula p WHERE p.rating >= :min AND p.rating < :max")
+    int countByRatingBetween(@Param("min") double min, @Param("max") double max);
 
 }

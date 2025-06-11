@@ -20,9 +20,12 @@
             <h2 class="mb-4">Panel de Analista</h2>
         </div>
     </div>
-
+    <!-- Tabla de estadísticas -->
+    <%@ include file="estadisticas.jsp" %>
     <!-- Navegación y Estadísticas -->
     <div class="row">
+        <div class="col-md-4">
+        </div>
         <div class="col-md-8">
             <!-- Navegación -->
             <div class="btn-group mb-4 w-100" role="group" aria-label="Navegación">
@@ -54,41 +57,7 @@
             </div>
         </div>
         
-        <div class="col-md-4">
-            <!-- Tabla de estadísticas -->
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Entidad</th>
-                            <th>Cantidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Películas</td>
-                            <td><%= request.getAttribute("totalPeliculas") %></td>
-                        </tr>
-                        <tr>
-                            <td>Reviews</td>
-                            <td><%= request.getAttribute("totalReviews") %></td>
-                        </tr>
-                        <tr>
-                            <td>Actores</td>
-                            <td><%= request.getAttribute("totalActores") %></td>
-                        </tr>
-                        <tr>
-                            <td>Usuarios</td>
-                            <td><%= request.getAttribute("totalUsuarios") %></td>
-                        </tr>
-                        <tr>
-                            <td>Trabajadores</td>
-                            <td><%= request.getAttribute("totalTrabajadores") %></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
     </div>
 
     <%

@@ -1,7 +1,5 @@
 package es.uma.taw.proyectotaw.entity;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-
 public class FiltrosPelicula {
     private String keyword;
     private String keyword2;

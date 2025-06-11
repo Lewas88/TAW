@@ -45,7 +45,13 @@ public class AnalistaController {
         if (filtros != null) {
             model.addAttribute("filtros", filtros);
         }
-
+        // Guardar la distribución de rating en el modelo para el JSP
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("peliculas", peliculaRepository.findAll());
         model.addAttribute("reviews", reviewRepository.findAll());
         model.addAttribute("actores", actorRepository.findAll());
@@ -151,6 +157,12 @@ public class AnalistaController {
         if (orden != null) {
             session.setAttribute("ordenSeleccionado", orden);
         }
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
         model.addAttribute("peliculas", peliculasFiltradas);
         model.addAttribute("totalPeliculas", peliculaRepository.count());
@@ -202,6 +214,12 @@ public class AnalistaController {
             return "analista";
         }
         if (reviewRepository.count() == 0) {
+            for (int i = 0; i < 9; i++) {
+                int count = peliculaRepository.countByRatingBetween(i, i + 1);
+                model.addAttribute("r" + i + "_" + (i + 1), count);
+            }
+            int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+            model.addAttribute("r9_10", countUltimo);
             model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
             model.addAttribute("reviews", reviewRepository.findAll());
             model.addAttribute("totalPeliculas", peliculaRepository.count());
@@ -239,6 +257,12 @@ public class AnalistaController {
         if (orden != null) {
             session.setAttribute("ordenSeleccionado", orden);
         }
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
         model.addAttribute("reviews", reviewsFiltradas);
         model.addAttribute("totalPeliculas", peliculaRepository.count());
@@ -288,6 +312,12 @@ public class AnalistaController {
         if (orden != null) {
             session.setAttribute("ordenSeleccionado", orden);
         }
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
         model.addAttribute("actores", actoresFiltrados);
         model.addAttribute("totalPeliculas", peliculaRepository.count());
@@ -321,7 +351,12 @@ public class AnalistaController {
 
         List<UsuarioEntity> usuariosFiltrados = usuarioRepository.filtrarUsuarios(keyword, keyword2, tipoUsuario);
 
-
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("usuarios", usuariosFiltrados);
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
@@ -353,7 +388,12 @@ public class AnalistaController {
 
         List<Trabajador> trabajadoresFiltrados = trabajadorRepository.filtrarTrabajadores(keyword, keyword2, keyword3);
 
-
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("trabajadores", trabajadoresFiltrados);
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
@@ -462,7 +502,12 @@ public class AnalistaController {
         }
         session.removeAttribute("ordenSeleccionado");
 
-        // Añadir todos los datos necesarios al modelo
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("peliculas", peliculaRepository.findAll());
         model.addAttribute("reviews", reviewRepository.findAll());
         model.addAttribute("actores", actorRepository.findAll());
@@ -486,6 +531,12 @@ public class AnalistaController {
         if (filtros != null) {
             model.addAttribute("filtros", filtros);
         }
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("peliculas", peliculaRepository.findAll());
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
@@ -499,6 +550,12 @@ public class AnalistaController {
     }
     @PostMapping("/elegirBuscadorDeReviews")
     public String elegirBuscadorDeReviews(Model model) {
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("reviews", reviewRepository.findAll());
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
@@ -511,6 +568,12 @@ public class AnalistaController {
     }
     @PostMapping("/elegirBuscadorDeActores")
     public String elegirBuscadorDeActores(Model model) {
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("actores", actorRepository.findAll());
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
@@ -523,6 +586,12 @@ public class AnalistaController {
     }
     @PostMapping("/elegirBuscadorDeUsuarios")
     public String elegirBuscadorDeUsuarios(Model model) {
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
@@ -536,6 +605,12 @@ public class AnalistaController {
 
     @PostMapping("/elegirBuscadorDeTrabajadores")
     public String elegirBuscadorDeTrabajadores(Model model) {
+        for (int i = 0; i < 9; i++) {
+            int count = peliculaRepository.countByRatingBetween(i, i + 1);
+            model.addAttribute("r" + i + "_" + (i + 1), count);
+        }
+        int countUltimo = peliculaRepository.countByRatingBetween(9, 10);
+        model.addAttribute("r9_10", countUltimo);
         model.addAttribute("trabajadores", trabajadorRepository.findAll());
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
