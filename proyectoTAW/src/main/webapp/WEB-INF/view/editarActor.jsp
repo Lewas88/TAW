@@ -1,4 +1,4 @@
-<%-- Julian Lemus 100% --%>
+<%-- Julian y Enrique --%>
 
 <%@ page import="es.uma.taw.proyectotaw.entity.Trabajador" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
@@ -66,6 +66,8 @@
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="/actores/editarCasting?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
+                         Editar participaciones <i class="bi bi-plus-circle"></i></a>
                     </div>
                 </form>
             </div>

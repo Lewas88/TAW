@@ -21,7 +21,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1 class="mb-0">Listado de actores:</h1>
+                <h1 class="mb-0">Listado de Actores:</h1>
                 <a href="/actores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir actor <i class="bi bi-plus-circle"></i></a>
             </div>
 

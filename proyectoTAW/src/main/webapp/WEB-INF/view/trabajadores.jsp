@@ -14,6 +14,7 @@
     %>
 </head>
 <body>
+
 <jsp:include page="cabecera.jsp" />
 <main>
     <section class="jumbotron text-center">
@@ -24,6 +25,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="mb-3">
+                <h1 class="mb-0">Listado de Trabajadores:</h1>
                 <a href="/trabajadores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir trabajador <i class="bi bi-plus-circle"></i></a>
             </div>
             <div class="row">

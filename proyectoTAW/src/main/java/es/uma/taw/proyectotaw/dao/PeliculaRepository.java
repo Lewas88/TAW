@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
+    //Daniel Linares
     @Query("SELECT r.pelicula FROM Review r GROUP BY r.pelicula ORDER BY AVG(r.califica) DESC")
     List<Pelicula> findTopRated(Pageable pageable);
 

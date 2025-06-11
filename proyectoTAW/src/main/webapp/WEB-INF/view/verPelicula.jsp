@@ -59,6 +59,9 @@ User: Daniel Linares y Enrique Silveira
                         <td class="fw-bold" style="border: none;">Ingresos:</td>
                         <td style="border: none;"><%= pelicula.getIngresos() %></td>
                     </tr>
+                    <tr>
+                        <a href="/peliculas/casting?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">Ver Casting <i class="bi bi-plus-circle"></i></a>
+                    </tr>
                 </table>
             </div>
         </div>

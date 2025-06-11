@@ -1,8 +1,10 @@
 package es.uma.taw.proyectotaw.controller;
 
 import es.uma.taw.proyectotaw.dao.ActorRepository;
+import es.uma.taw.proyectotaw.dao.CastingRepository;
 import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
+import es.uma.taw.proyectotaw.entity.Casting;
 import es.uma.taw.proyectotaw.entity.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,8 @@ public class ActoresControlador { //Julian
 
     @Autowired protected PeliculaRepository  peliculaRepository;
 
+    @Autowired protected CastingRepository castingRepository;
+
     @GetMapping("/")//Julian
     public String doListarActores(Model model) {
         List<Actor> actors = actorRepository.findAll();
@@ -34,6 +38,7 @@ public class ActoresControlador { //Julian
     public String doVerActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
         Actor actor = this.actorRepository.findById(id).orElse(new Actor());
         List<Pelicula> peliculasParticipadas = peliculaRepository.findPeliculasByActorId(id);
+        model.addAttribute("casting", this.castingRepository.findByActorId(id));
         model.addAttribute("actor", actor);
         model.addAttribute("peliculasParticipadas", peliculasParticipadas);
         return "verActor";
@@ -45,6 +50,15 @@ public class ActoresControlador { //Julian
         model.addAttribute("actor", actor);
         model.addAttribute("peliculas", this.peliculaRepository.findAll());
         return "editarActor";
+    }
+    @GetMapping("/editarCasting")//Enrique
+    public String doEditarCasting(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
+        Actor actor = this.actorRepository.findById(id).orElse(new Actor());
+        model.addAttribute("actor", actor);
+        model.addAttribute("peliculas", this.peliculaRepository.findAll());
+        model.addAttribute("peliculasParticipadas", this.peliculaRepository.findPeliculasByActorId(id));
+        model.addAttribute("casting", this.castingRepository.findByActorId(id));
+        return "editarActorCasting";
     }
     @PostMapping("/guardar")//Julian
     public String doGuardarActor(@RequestParam("id")Integer id,
@@ -61,5 +75,46 @@ public class ActoresControlador { //Julian
     public String doBorrarActor(@RequestParam("id")Integer id) {
         this.actorRepository.deleteById(id);
         return "redirect:/actores/";
+    }
+
+
+    //ENRIQUE
+    @PostMapping("/guardarParticipaciones")
+    public String guardarParticipaciones(
+            @RequestParam("id") Integer actorId,
+            @RequestParam(value = "peliculasParticipadas", required = false) List<Integer> peliculasIds,
+            @RequestParam(value = "personaje", required = false) List<String> personajes,
+            Model model
+    ) {
+        Actor actor = this.actorRepository.findById(actorId).orElse(null);
+        if (actor == null) {
+            return "redirect:/actores/";
+        }
+
+        List<Casting> castingsActuales = this.castingRepository.findByActorId(actorId);
+        this.castingRepository.deleteAll(castingsActuales);
+
+        if (peliculasIds != null) {
+            for (int i = 0; i < peliculasIds.size(); i++) {
+                Integer peliculaId = peliculasIds.get(i);
+                Pelicula pelicula = this.peliculaRepository.findById(peliculaId).orElse(null);
+                if (pelicula != null) {
+                    String personaje = (personajes != null && personajes.size() > i) ? personajes.get(i) : "";
+
+                    es.uma.taw.proyectotaw.entity.CastingId castingId = new es.uma.taw.proyectotaw.entity.CastingId();
+                    castingId.setActorId(actor.getId());
+                    castingId.setPeliculaId(pelicula.getId());
+
+                    Casting casting = new Casting();
+                    casting.setId(castingId);
+                    casting.setActor(actor);
+                    casting.setPelicula(pelicula);
+                    casting.setPersonaje(personaje != null ? personaje : "");
+                    this.castingRepository.save(casting);
+                }
+            }
+        }
+
+        return "redirect:/actores/ver?id=" + actorId;
     }
 }

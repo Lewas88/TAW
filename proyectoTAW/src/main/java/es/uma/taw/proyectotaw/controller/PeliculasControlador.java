@@ -1,10 +1,7 @@
 package es.uma.taw.proyectotaw.controller;
 
-import es.uma.taw.proyectotaw.dao.PeliculaRepository;
-import es.uma.taw.proyectotaw.dao.ReviewRepository;
-import es.uma.taw.proyectotaw.entity.Pelicula;
-import es.uma.taw.proyectotaw.entity.Review;
-import es.uma.taw.proyectotaw.entity.UsuarioEntity;
+import es.uma.taw.proyectotaw.dao.*;
+import es.uma.taw.proyectotaw.entity.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.List;
 
 // Daniel Linares y Enrique Silveira
 
@@ -23,6 +21,8 @@ import java.time.LocalDate;
 public class PeliculasControlador {
     @Autowired protected PeliculaRepository peliculaRepository;
     @Autowired protected ReviewRepository reviewRepository;
+    @Autowired protected ActorRepository actorRepository;
+    @Autowired protected TrabajadorRepository trabajadorRepository;
 
     @GetMapping("/")
     public String doIndex(HttpSession session, Model model) {
@@ -41,6 +41,21 @@ public class PeliculasControlador {
         model.addAttribute("reviews", reviewRepository.findAll());
         return "verPelicula";
     }
+
+    @GetMapping("/casting")
+    public String doCasting(@RequestParam(value = "id")Integer id, HttpSession session, Model model) {
+        Pelicula pelicula = this.peliculaRepository.findById(id).orElse(null);
+        List<Actor> cast = this.actorRepository.findActoresByPeliculaId(id);
+        List<Trabajador> trabajadores = this.trabajadorRepository.findTrabajadoresByPeliculaId(id);
+        model.addAttribute("pelicula", pelicula);
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user", user);
+        model.addAttribute("casting", cast);
+        model.addAttribute("trabajadores", trabajadores);
+
+        return "verCastingPelicula";
+    }
+
 
     /*
     @PostMapping("/recomendar")

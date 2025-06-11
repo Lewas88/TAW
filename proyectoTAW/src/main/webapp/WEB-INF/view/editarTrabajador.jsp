@@ -55,6 +55,8 @@
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="/trabajadores/editarTrabajo?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">
+                            Editar participaciones <i class="bi bi-plus-circle"></i></a>
                     </div>
                 </form>
             </div>

@@ -78,6 +78,9 @@
                     <a href="/trabajadores/editar?id=<%=trabajador.getId()%>" class="btn btn-primary">
                         Editar <i class="bi bi-pencil"></i>
                     </a>
+
+                    <a href="/trabajadores/editarTrabajo?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">
+                        Editar participaciones <i class="bi bi-plus-circle"></i></a>
                 </div>
 
             </div>
