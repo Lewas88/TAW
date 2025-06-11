@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.*" %>
+<%@ page import="es.uma.taw.proyectotaw.ui.Usuario" %>
 <%@ include file="cabecera.jsp" %>
 
 <!DOCTYPE html>
@@ -224,7 +225,7 @@
                     <!-- Botones -->
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-primary">Filtrar</button>
-                        <button type="reset" class="btn btn-secondary">Limpiar campos</button>
+                        <button type="reset" class="btn btn-secondary">Último filtro</button>
                         <button type="button" class="btn btn-danger" 
                                 onclick="document.getElementById('borrarFiltrosForm').submit();">
                             Borrar filtros
@@ -233,20 +234,35 @@
                 </form>
 
                 <!-- Formulario oculto para borrar filtros -->
-                <form id="borrarFiltrosForm" action="/analista/borrarFiltros" method="post" class="d-none"></form>
+                <form id="borrarFiltrosForm" action="/analista/borrarFiltros" method="post" class="d-none">
+                    <input type="hidden" name="tipo" value="1">
+                </form>
             </div>
         </div>
-
+        <form action="/analista/exportarCSV" method="post" class="d-inline">
+            <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
+            <%
+                List<Pelicula> peliculas = (List<Pelicula>) request.getAttribute("peliculas");
+                if (peliculas != null) {
+                    for (Pelicula p : peliculas) {
+            %>
+            <input type="hidden" name="ids" value="<%= p.getId() %>">
+            <%
+                }
+            }
+            %>
+            <button type="submit" class="btn btn-success">Exportar CSV</button>
+        </form>
         <!-- Resultados -->
         <div class="card mt-4">
             <div class="card-body">
-                <h5 class="card-title">Resultados</h5>
+                <h5 class="card-title">Películas</h5>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="table-dark">
                             <tr>
                                 <th>Título</th>
-                                <th>Rating</th>
+                                <th>Puntuación</th>
                                 <th>Ingresos</th>
                                 <th>Presupuesto</th>
                                 <th>Fecha de estreno</th>
@@ -255,7 +271,6 @@
                         </thead>
                         <tbody>
                             <%
-                                List<Pelicula> peliculas = (List<Pelicula>)request.getAttribute("peliculas");
                                 if (peliculas != null) {
                                     for (Pelicula pelicula : peliculas) {
                             %>
@@ -279,6 +294,20 @@
     <%
         } else if ((Integer)request.getAttribute("buscador") == 2) {
     %>
+    <form action="/analista/exportarCSV" method="post" class="d-inline">
+        <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
+        <%
+            List<Review> reviews = (List<Review>) request.getAttribute("reviews");
+            if (reviews != null) {
+                for (Review r : reviews) {
+        %>
+        <input type="hidden" name="ids" value="<%= r.getId() %>">
+        <%
+                }
+            }
+        %>
+        <button type="submit" class="btn btn-success">Exportar CSV</button>
+    </form>
     <!-- Resultados de Reviews -->
     <div class="card mt-4">
         <div class="card-body">
@@ -311,7 +340,78 @@
     </div>
     <%
     } else if ((Integer)request.getAttribute("buscador") == 3) {
+        FiltrosPelicula filtros = (FiltrosPelicula)request.getAttribute("filtros");
     %>
+    <form action="/analista/filtrarActores" method="post" id="filtroForm">
+        <div class="row">
+            <!-- Búsqueda por keyword -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword" class="form-label">Título:</label>
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                       value="<%= filtros != null ? filtros.getKeyword() : "" %>">
+            </div>
+
+            <!-- Ingresos -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Edad:</label>
+                <div class="row">
+                    <div class="col">
+                        <input type="number" class="form-control" name="minEdad"
+                               placeholder="Mínima"
+                               value="<%= filtros != null ? filtros.getMinEdad() : "" %>">
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" name="maxEdad"
+                               placeholder="Máxima"
+                               value="<%= filtros != null ? filtros.getMaxIngresos() : "" %>">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ordenamiento -->
+            <div class="col-12 mb-3">
+                <label for="orden" class="form-label">Ordenar por:</label>
+                <select class="form-select" id="orden" name="orden">
+                    <option value="">Sin orden específico</option>
+                    <!-- Ordenar por Edad -->
+                    <option value="edadDesc" <%= "edadDesc".equals(request.getAttribute("ordenSeleccionado")) ? "selected" : "" %>>
+                        Edad (Mayor a menor)
+                    </option>
+                    <option value="edadAsc" <%= "edadAsc".equals(request.getAttribute("ordenSeleccionado")) ? "selected" : "" %>>
+                        Edad (Menor a mayor)
+                    </option>
+                </select>
+
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <button type="reset" class="btn btn-secondary">Último filtro</button>
+            <button type="button" class="btn btn-danger"
+                    onclick="document.getElementById('borrarFiltrosForm').submit();">
+                Borrar filtros
+            </button>
+        </div>
+    </form>
+    <form id="borrarFiltrosForm" action="/analista/borrarFiltros" method="post" class="d-none">
+        <input type="hidden" name="tipo" value="3">
+    </form>
+    <form action="/analista/exportarCSV" method="post" class="d-inline">
+        <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
+        <%
+            List<Actor> actores = (List<Actor>) request.getAttribute("actores");
+            if (actores != null) {
+                for (Actor a : actores) {
+        %>
+        <input type="hidden" name="ids" value="<%= a.getId() %>">
+        <%
+                }
+            }
+        %>
+        <button type="submit" class="btn btn-success">Exportar CSV</button>
+    </form>
     <!-- Resultados de Actores -->
     <div class="card mt-4">
         <div class="card-body">
@@ -345,6 +445,20 @@
     <%
     } else if ((Integer)request.getAttribute("buscador") == 4) {
     %>
+    <form action="/analista/exportarCSV" method="post" class="d-inline">
+        <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
+        <%
+            List<UsuarioEntity> usuarios = (List<UsuarioEntity>) request.getAttribute("usuarios");
+            if (usuarios != null) {
+                for (UsuarioEntity u : usuarios) {
+        %>
+        <input type="hidden" name="ids" value="<%= u.getId() %>">
+        <%
+                }
+            }
+        %>
+        <button type="submit" class="btn btn-success">Exportar CSV</button>
+    </form>
     <!-- Resultados de Usuarios -->
     <div class="card mt-4">
         <div class="card-body">
@@ -374,6 +488,20 @@
     <%
     } else if ((Integer)request.getAttribute("buscador") == 5) {
     %>
+    <form action="/analista/exportarCSV" method="post" class="d-inline">
+        <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
+        <%
+            List<Trabajador> trabajadores = (List<Trabajador>) request.getAttribute("trabajadores");
+            if (trabajadores != null) {
+                for (Trabajador t : trabajadores) {
+        %>
+        <input type="hidden" name="ids" value="<%= t.getId() %>">
+        <%
+                }
+            }
+        %>
+        <button type="submit" class="btn btn-success">Exportar CSV</button>
+    </form>
     <!-- Resultados de Trabajadores -->
     <div class="card mt-4">
         <div class="card-body">

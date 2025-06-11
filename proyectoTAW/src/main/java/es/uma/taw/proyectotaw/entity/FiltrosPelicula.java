@@ -1,5 +1,7 @@
 package es.uma.taw.proyectotaw.entity;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+
 public class FiltrosPelicula {
     private String keyword;
     private Long minIngresos;
@@ -11,6 +13,8 @@ public class FiltrosPelicula {
     private Double minRating;
     private Integer minDuracion;
     private Integer maxDuracion;
+    private Integer minEdad;
+    private Integer maxEdad;
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
@@ -72,5 +76,16 @@ public class FiltrosPelicula {
     public Integer getMaxDuracion() {
         return maxDuracion;
     }
-
+    public void setMinEdad(Integer minEdad) {
+        this.minEdad = minEdad;
+    }
+    public Integer getMinEdad() {
+        return minEdad;
+    }
+    public void setMaxEdad(Integer maxEdad) {
+        this.maxEdad = maxEdad;
+    }
+    public Integer getMaxEdad() {
+        return maxEdad;
+    }
 }
