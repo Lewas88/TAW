@@ -81,6 +81,10 @@
                             <td>Usuarios</td>
                             <td><%= request.getAttribute("totalUsuarios") %></td>
                         </tr>
+                        <tr>
+                            <td>Trabajadores</td>
+                            <td><%= request.getAttribute("totalTrabajadores") %></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -293,7 +297,81 @@
         </div>
     <%
         } else if ((Integer)request.getAttribute("buscador") == 2) {
+            FiltrosPelicula filtros = (FiltrosPelicula)request.getAttribute("filtros");
     %>
+    <form action="/analista/filtrarReviews" method="post" id="filtroForm">
+        <div class="row">
+            <!-- Búsqueda por keyword -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword" class="form-label">Película:</label>
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                       value="<%= filtros != null ? filtros.getKeyword() : "" %>">
+            </div>
+            <!-- Búsqueda por keyword 2 -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword2" class="form-label">Usuario:</label>
+                <input type="text" class="form-control" id="keyword2" name="keyword2"
+                       value="<%= filtros != null ? filtros.getKeyword2() : "" %>">
+            </div>
+            <!-- Rating -->
+            <div class="col-md-6 mb-3">
+                <label for="minRating" class="form-label">Rating mínimo:</label>
+                <input type="number" class="form-control" id="minRating" name="minRating"
+                       step="0.1" min="0" max="10"
+                       value="<%= filtros != null ? filtros.getMinRating() : "" %>">
+            </div>
+            <!-- Fechas -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Fecha de estreno:</label>
+                <div class="row">
+                    <div class="col">
+                        <input type="date" class="form-control" name="fechaInicio"
+                               value="<%= filtros != null ? filtros.getFechaInicio() : "" %>">
+                    </div>
+                    <div class="col">
+                        <input type="date" class="form-control" name="fechaFin"
+                               value="<%= filtros != null ? filtros.getFechaFin() : "" %>">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ordenamiento -->
+            <div class="col-12 mb-3">
+                <label for="orden" class="form-label">Ordenar por:</label>
+                <select class="form-select" id="orden" name="orden">
+                    <option value="">Sin orden específico</option>
+                    <!-- Ordenar por Rating -->
+                    <option value="ratingDesc" <%= "ratingDesc".equals(request.getAttribute("ordenSeleccionado")) ? "selected" : "" %>>
+                        Rating (Mayor a menor)
+                    </option>
+                    <option value="ratingAsc" <%= "ratingAsc".equals(request.getAttribute("ordenSeleccionado")) ? "selected" : "" %>>
+                        Rating (Menor a mayor)
+                    </option>
+                    <!-- Ordenar por Fecha -->
+                    <option value="fechaDesc" <%= "fechaDesc".equals(request.getAttribute("ordenSeleccionado")) ? "selected" : "" %>>
+                        Fecha (Más reciente primero)
+                    </option>
+                    <option value="fechaAsc" <%= "fechaAsc".equals(request.getAttribute("ordenSeleccionado")) ? "selected" : "" %>>
+                        Fecha (Más antigua primero)
+                    </option>
+                </select>
+
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <button type="reset" class="btn btn-secondary">Último filtro</button>
+            <button type="button" class="btn btn-danger"
+                    onclick="document.getElementById('borrarFiltrosForm').submit();">
+                Borrar filtros
+            </button>
+        </div>
+    </form>
+    <form id="borrarFiltrosForm" action="/analista/borrarFiltros" method="post" class="d-none">
+        <input type="hidden" name="tipo" value="2">
+    </form>
     <form action="/analista/exportarCSV" method="post" class="d-inline">
         <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
         <%
@@ -346,7 +424,7 @@
         <div class="row">
             <!-- Búsqueda por keyword -->
             <div class="col-md-6 mb-3">
-                <label for="keyword" class="form-label">Título:</label>
+                <label for="keyword" class="form-label">Nombre:</label>
                 <input type="text" class="form-control" id="keyword" name="keyword"
                        value="<%= filtros != null ? filtros.getKeyword() : "" %>">
             </div>
@@ -444,7 +522,49 @@
     </div>
     <%
     } else if ((Integer)request.getAttribute("buscador") == 4) {
+            FiltrosPelicula filtros = (FiltrosPelicula)request.getAttribute("filtros");
     %>
+    <form action="/analista/filtrarUsuarios" method="post" id="filtroForm">
+        <div class="row">
+            <!-- Búsqueda por keyword -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                       value="<%= filtros != null ? filtros.getKeyword() : "" %>">
+            </div>
+            <!-- Búsqueda por keyword 2 -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword2" class="form-label">Correo:</label>
+                <input type="text" class="form-control" id="keyword2" name="keyword2"
+                       value="<%= filtros != null ? filtros.getKeyword2() : "" %>">
+            </div>
+            <!-- Selección de tipo de usuario -->
+            <div class="col-md-6 mb-3">
+                <label for="tipoUsuario" class="form-label">Tipo de Usuario:</label>
+                <select class="form-select" id="tipoUsuario" name="tipoUsuario">
+                    <option value="">Todos</option>
+                    <option value="1" <%= "1".equals(String.valueOf(request.getAttribute("tipoUsuarioSeleccionado"))) ? "selected" : "" %>>Admin</option>
+                    <option value="2" <%= "2".equals(String.valueOf(request.getAttribute("tipoUsuarioSeleccionado"))) ? "selected" : "" %>>Usuario</option>
+                    <option value="3" <%= "3".equals(String.valueOf(request.getAttribute("tipoUsuarioSeleccionado"))) ? "selected" : "" %>>Editor</option>
+                    <option value="4" <%= "4".equals(String.valueOf(request.getAttribute("tipoUsuarioSeleccionado"))) ? "selected" : "" %>>Recomendador</option>
+                    <option value="5" <%= "5".equals(String.valueOf(request.getAttribute("tipoUsuarioSeleccionado"))) ? "selected" : "" %>>Analista</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <button type="reset" class="btn btn-secondary">Último filtro</button>
+            <button type="button" class="btn btn-danger"
+                    onclick="document.getElementById('borrarFiltrosForm').submit();">
+                Borrar filtros
+            </button>
+        </div>
+    </form>
+    <form id="borrarFiltrosForm" action="/analista/borrarFiltros" method="post" class="d-none">
+        <input type="hidden" name="tipo" value="4">
+    </form>
     <form action="/analista/exportarCSV" method="post" class="d-inline">
         <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
         <%
@@ -487,7 +607,43 @@
     </div>
     <%
     } else if ((Integer)request.getAttribute("buscador") == 5) {
+            FiltrosPelicula filtros = (FiltrosPelicula)request.getAttribute("filtros");
     %>
+    <form action="/analista/filtrarTrabajadores" method="post" id="filtroForm">
+        <div class="row">
+            <!-- Búsqueda por keyword -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                       value="<%= filtros != null ? filtros.getKeyword() : "" %>">
+            </div>
+            <!-- Búsqueda por keyword 2 -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword2" class="form-label">Puesto:</label>
+                <input type="text" class="form-control" id="keyword2" name="keyword2"
+                       value="<%= filtros != null ? filtros.getKeyword2() : "" %>">
+            </div>
+            <!-- Búsqueda por keyword 3 -->
+            <div class="col-md-6 mb-3">
+                <label for="keyword2" class="form-label">Departamento:</label>
+                <input type="text" class="form-control" id="keyword3" name="keyword3"
+                       value="<%= filtros != null ? filtros.getKeyword3() : "" %>">
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <button type="reset" class="btn btn-secondary">Último filtro</button>
+            <button type="button" class="btn btn-danger"
+                    onclick="document.getElementById('borrarFiltrosForm').submit();">
+                Borrar filtros
+            </button>
+        </div>
+    </form>
+    <form id="borrarFiltrosForm" action="/analista/borrarFiltros" method="post" class="d-none">
+        <input type="hidden" name="tipo" value="5">
+    </form>
     <form action="/analista/exportarCSV" method="post" class="d-inline">
         <input type="hidden" name="tipo" value="<%= request.getAttribute("buscador") %>">
         <%

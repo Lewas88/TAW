@@ -4,6 +4,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 
 public class FiltrosPelicula {
     private String keyword;
+    private String keyword2;
+    private String keyword3;
+    private Integer tipoDeUsuario;
     private Long minIngresos;
     private Long maxIngresos;
     private Long minPresupuesto;
@@ -21,6 +24,24 @@ public class FiltrosPelicula {
     }
     public String getKeyword() {
         return keyword;
+    }
+    public void setKeyword2(String keyword2) {
+        this.keyword2 = keyword2;
+    }
+    public String getKeyword2() {
+        return keyword2;
+    }
+    public void setKeyword3(String keyword3) {
+        this.keyword3 = keyword3;
+    }
+    public String getKeyword3() {
+        return keyword3;
+    }
+    public void setTipoDeUsuario(Integer tipoDeUsuario) {
+        this.tipoDeUsuario = tipoDeUsuario;
+    }
+    public Integer getTipoDeUsuario() {
+        return tipoDeUsuario;
     }
     public void setMinIngresos(Long minIngresos) {
         this.minIngresos = minIngresos;

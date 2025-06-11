@@ -54,6 +54,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", 0);
         return "analista";
@@ -152,15 +153,101 @@ public class AnalistaController {
         }
         model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
         model.addAttribute("peliculas", peliculasFiltradas);
-        model.addAttribute("reviews", reviewRepository.findAll());
-        model.addAttribute("actores", actorRepository.findAll());
-        model.addAttribute("usuarios", usuarioRepository.findAll());
-        model.addAttribute("totalPeliculas", Long.valueOf(peliculasFiltradas.size()));
+        model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", 1);
+        model.addAttribute("ordenSeleccionado", orden);
+        model.addAttribute("filtros", filtros);
+        return "analista";
+    }
+
+    @PostMapping("/filtrarReviews")
+    public String doFiltrarReviews(Model model, HttpSession session, @RequestParam(required = false) String keyword,
+                                     @RequestParam(required = false) String keyword2,
+                                     @RequestParam(required = false) String fechaInicio,
+                                     @RequestParam(required = false) String fechaFin,
+                                     @RequestParam(required = false) Double minRating,
+                                     @RequestParam(required = false) String orden
+    ) {
+        UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("user");
+        if (usuario == null || usuario.getTipoUsuario().getId() != 5) {
+            return "redirect:/login/";
+        }
+
+        FiltrosPelicula filtros = new FiltrosPelicula();
+        filtros.setKeyword(keyword);
+        filtros.setKeyword2(keyword2);
+        filtros.setFechaInicio(fechaInicio);
+        filtros.setFechaFin(fechaFin);
+        filtros.setMinRating(minRating);
+
+        session.setAttribute("filtrosReview", filtros);
+
+        LocalDate fechaInicioLD = null;
+        LocalDate fechaFinLD = null;
+        try {
+            if (fechaInicio != null && !fechaInicio.isEmpty()) {
+                fechaInicioLD = LocalDate.parse(fechaInicio);
+            }
+            if (fechaFin != null && !fechaFin.isEmpty()) {
+                fechaFinLD = LocalDate.parse(fechaFin);
+            }
+        } catch (DateTimeParseException e) {
+            // Manejar error de formato de fecha si es necesario
+            model.addAttribute("error", "Formato de fecha inválido");
+            return "analista";
+        }
+        if (reviewRepository.count() == 0) {
+            model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
+            model.addAttribute("reviews", reviewRepository.findAll());
+            model.addAttribute("totalPeliculas", peliculaRepository.count());
+            model.addAttribute("totalReviews", reviewRepository.count());
+            model.addAttribute("totalActores", actorRepository.count());
+            model.addAttribute("totalUsuarios", usuarioRepository.count());
+            model.addAttribute("totalTrabajadores", trabajadorRepository.count());
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("buscador", 2);
+            model.addAttribute("ordenSeleccionado", orden);
+            model.addAttribute("filtros", filtros);
+            return "analista";
+        }
+        List<Review> reviewsFiltradas = reviewRepository.filtrarReviews(
+                keyword, keyword2, fechaInicioLD, fechaFinLD, minRating);
+        // Después ordenar
+        if (orden != null && !orden.isEmpty()) {
+            switch (orden) {
+                case "ratingDesc":
+                    reviewsFiltradas.sort((p1, p2) -> p2.getCalifica().compareTo(p1.getCalifica()));
+                    break;
+                case "ratingAsc":
+                    reviewsFiltradas.sort((p1, p2) -> p1.getCalifica().compareTo(p2.getCalifica()));
+                    break;
+                case "fechaDesc":
+                    reviewsFiltradas.sort((p1, p2) -> p2.getFecha().compareTo(p1.getFecha()));
+                    break;
+                case "fechaAsc":
+                    reviewsFiltradas.sort((p1, p2) -> p1.getFecha().compareTo(p2.getFecha()));
+                    break;
+            }
+            session.setAttribute("ordenSeleccionado", orden);
+        }
+
+        if (orden != null) {
+            session.setAttribute("ordenSeleccionado", orden);
+        }
+        model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
+        model.addAttribute("reviews", reviewsFiltradas);
+        model.addAttribute("totalPeliculas", peliculaRepository.count());
+        model.addAttribute("totalReviews", reviewRepository.count());
+        model.addAttribute("totalActores", actorRepository.count());
+        model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("buscador", 2);
         model.addAttribute("ordenSeleccionado", orden);
         model.addAttribute("filtros", filtros);
         return "analista";
@@ -207,6 +294,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", 3);
         model.addAttribute("ordenSeleccionado", orden);
@@ -214,6 +302,69 @@ public class AnalistaController {
         return "analista";
     }
 
+    @PostMapping("/filtrarUsuarios")
+    public String doFiltrarUsuarios(Model model, HttpSession session, @RequestParam(required = false) String keyword,
+                                    @RequestParam(required = false) String keyword2,
+                                    @RequestParam(required = false) Integer tipoUsuario
+    ) {
+        UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("user");
+        if (usuario == null || usuario.getTipoUsuario().getId() != 5) {
+            return "redirect:/login/";
+        }
+
+        FiltrosPelicula filtros = new FiltrosPelicula();
+        filtros.setKeyword(keyword);
+        filtros.setKeyword2(keyword2);
+        filtros.setTipoDeUsuario(tipoUsuario);
+
+        session.setAttribute("filtrosUsuarios", filtros);
+
+        List<UsuarioEntity> usuariosFiltrados = usuarioRepository.filtrarUsuarios(keyword, keyword2, tipoUsuario);
+
+
+        model.addAttribute("usuarios", usuariosFiltrados);
+        model.addAttribute("totalPeliculas", peliculaRepository.count());
+        model.addAttribute("totalReviews", reviewRepository.count());
+        model.addAttribute("totalActores", actorRepository.count());
+        model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("buscador", 4);
+        model.addAttribute("filtros", filtros);
+        return "analista";
+    }
+
+    @PostMapping("/filtrarTrabajadores")
+    public String doFiltrarTrabajadores(Model model, HttpSession session, @RequestParam(required = false) String keyword,
+                                    @RequestParam(required = false) String keyword2,
+                                    @RequestParam(required = false) String keyword3
+    ) {
+        UsuarioEntity usuario = (UsuarioEntity) session.getAttribute("user");
+        if (usuario == null || usuario.getTipoUsuario().getId() != 5) {
+            return "redirect:/login/";
+        }
+
+        FiltrosPelicula filtros = new FiltrosPelicula();
+        filtros.setKeyword(keyword);
+        filtros.setKeyword2(keyword2);
+        filtros.setKeyword3(keyword3);
+
+        session.setAttribute("filtrosTrabajadores", filtros);
+
+        List<Trabajador> trabajadoresFiltrados = trabajadorRepository.filtrarTrabajadores(keyword, keyword2, keyword3);
+
+
+        model.addAttribute("trabajadores", trabajadoresFiltrados);
+        model.addAttribute("totalPeliculas", peliculaRepository.count());
+        model.addAttribute("totalReviews", reviewRepository.count());
+        model.addAttribute("totalActores", actorRepository.count());
+        model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("buscador", 5);
+        model.addAttribute("filtros", filtros);
+        return "analista";
+    }
     @PostMapping("/exportarCSV")
     public void exportarCSV(HttpServletResponse response, @RequestParam Integer tipo, @RequestParam(required = false) List<Integer> ids) throws Exception {
         response.setContentType("text/csv");
@@ -316,10 +467,12 @@ public class AnalistaController {
         model.addAttribute("reviews", reviewRepository.findAll());
         model.addAttribute("actores", actorRepository.findAll());
         model.addAttribute("usuarios", usuarioRepository.findAll());
+        model.addAttribute("trabajadores", trabajadorRepository.findAll());
         model.addAttribute("totalPeliculas", peliculaRepository.count());
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", tipo);
 
@@ -338,6 +491,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 1);
         model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
         return "analista";
@@ -350,6 +504,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 2);
         return "analista";
 
@@ -361,6 +516,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 3);
         return "analista";
 
@@ -372,6 +528,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 4);
         return "analista";
 
@@ -384,6 +541,7 @@ public class AnalistaController {
         model.addAttribute("totalReviews", reviewRepository.count());
         model.addAttribute("totalActores", actorRepository.count());
         model.addAttribute("totalUsuarios", usuarioRepository.count());
+        model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 5);
         return "analista";
     }
