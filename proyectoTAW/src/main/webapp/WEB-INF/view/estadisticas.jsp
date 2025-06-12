@@ -19,7 +19,7 @@
 <!-- Toggle Estadísticas Button -->
 <div class="container mt-3">
   <button id="toggleEstadisticasBtn" type="button" class="btn btn-outline-info btn-sm mb-3">
-    Ocultar Estadísticas
+    📊 Ocultar Estadísticas
   </button>
 </div>
 <div id="estadisticas-container">
@@ -245,14 +245,22 @@
 <script>
   const toggleBtn = document.getElementById('toggleEstadisticasBtn');
   const estadisticasContainer = document.getElementById('estadisticas-container');
-  toggleBtn.addEventListener('click', function() {
-    if (estadisticasContainer.style.display === 'none') {
-      estadisticasContainer.style.display = '';
-      toggleBtn.textContent = 'Ocultar Estadísticas';
-    } else {
-      estadisticasContainer.style.display = 'none';
-      toggleBtn.textContent = 'Mostrar Estadísticas';
-    }
+
+  // Función para actualizar el botón y el contenedor según el estado
+  function actualizarEstadoEstadisticas(visible) {
+    estadisticasContainer.style.display = visible ? '' : 'none';
+    toggleBtn.textContent = visible ? '📊 Ocultar Estadísticas' : '📈 Mostrar Estadísticas';
+  }
+
+  // Leer estado guardado desde localStorage
+  const estadoGuardado = localStorage.getItem('estadisticasVisibles');
+  const estadisticasVisibles = estadoGuardado === null ? true : estadoGuardado === 'true';
+  actualizarEstadoEstadisticas(estadisticasVisibles);
+
+  toggleBtn.addEventListener('click', function () {
+    const nuevaVisibilidad = estadisticasContainer.style.display === 'none';
+    localStorage.setItem('estadisticasVisibles', nuevaVisibilidad);
+    actualizarEstadoEstadisticas(nuevaVisibilidad);
   });
 </script>
 </html>

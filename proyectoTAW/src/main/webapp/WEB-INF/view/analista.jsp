@@ -28,30 +28,30 @@
         </div>
         <div class="col-md-8">
             <!-- Navegación -->
-            <div class="btn-group mb-4 w-100" role="group" aria-label="Navegación">
-                <form action="/analista/elegirBuscadorDePeliculas" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-primary <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 1 ? "active" : "" %>">
-                        Buscador de Películas
+            <div class="btn-group mb-4 d-flex justify-content-center flex-wrap gap-2" role="group" aria-label="Navegación">
+                <form action="/analista/elegirBuscadorDePeliculas" method="post" class="d-inline mb-2">
+                    <button type="submit" class="btn btn-outline-primary w-100 <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 1 ? "active" : "" %>">
+                        🎬 Películas
                     </button>
                 </form>
-                <form action="/analista/elegirBuscadorDeReviews" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-primary <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 2 ? "active" : "" %>">
-                        Buscador de Reviews
+                <form action="/analista/elegirBuscadorDeReviews" method="post" class="d-inline mb-2">
+                    <button type="submit" class="btn btn-outline-success w-100 <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 2 ? "active" : "" %>">
+                        📝 Reviews
                     </button>
                 </form>
-                <form action="/analista/elegirBuscadorDeActores" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-primary <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 3 ? "active" : "" %>">
-                        Buscador de Actores
+                <form action="/analista/elegirBuscadorDeActores" method="post" class="d-inline mb-2">
+                    <button type="submit" class="btn btn-outline-warning w-100 <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 3 ? "active" : "" %>">
+                        🕴 Actores
                     </button>
                 </form>
-                <form action="/analista/elegirBuscadorDeUsuarios" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-primary <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 4 ? "active" : "" %>">
-                        Buscador de Usuarios
+                <form action="/analista/elegirBuscadorDeUsuarios" method="post" class="d-inline mb-2">
+                    <button type="submit" class="btn btn-outline-info w-100 <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 4 ? "active" : "" %>">
+                        👤 Usuarios
                     </button>
                 </form>
-                <form action="/analista/elegirBuscadorDeTrabajadores" method="post" class="d-inline">
-                    <button type="submit" class="btn btn-primary <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 5 ? "active" : "" %>">
-                        Buscador de Trabajadores
+                <form action="/analista/elegirBuscadorDeTrabajadores" method="post" class="d-inline mb-2">
+                    <button type="submit" class="btn btn-outline-danger w-100 <%= request.getAttribute("buscador") != null && (Integer)request.getAttribute("buscador") == 5 ? "active" : "" %>">
+                        🧰 Trabajadores
                     </button>
                 </form>
             </div>
