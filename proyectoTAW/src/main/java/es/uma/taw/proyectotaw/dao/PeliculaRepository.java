@@ -40,4 +40,6 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
     @Query("SELECT COUNT(p) FROM Pelicula p WHERE p.rating >= :min AND p.rating < :max")
     int countByRatingBetween(@Param("min") double min, @Param("max") double max);
 
+    @Query("SELECT p.titulo, (p.ingresos - p.presupuesto) AS utilidad FROM Pelicula p ORDER BY utilidad DESC")
+    List<Object[]> findTop5PeliculasPorUtilidad(Pageable pageable);
 }

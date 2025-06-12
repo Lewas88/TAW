@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.hibernate.mapping.Any;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,7 @@ public class AnalistaController {
         }
         // Guardar la distribución de rating en el modelo para el JSP
         for (int i = 0; i < 9; i++) {
+
             int count = peliculaRepository.countByRatingBetween(i, i + 1);
             model.addAttribute("r" + i + "_" + (i + 1), count);
         }
@@ -63,6 +65,8 @@ public class AnalistaController {
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", 0);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 
@@ -174,6 +178,8 @@ public class AnalistaController {
         model.addAttribute("buscador", 1);
         model.addAttribute("ordenSeleccionado", orden);
         model.addAttribute("filtros", filtros);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 
@@ -231,6 +237,8 @@ public class AnalistaController {
             model.addAttribute("buscador", 2);
             model.addAttribute("ordenSeleccionado", orden);
             model.addAttribute("filtros", filtros);
+            model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+            model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
             return "analista";
         }
         List<Review> reviewsFiltradas = reviewRepository.filtrarReviews(
@@ -274,6 +282,8 @@ public class AnalistaController {
         model.addAttribute("buscador", 2);
         model.addAttribute("ordenSeleccionado", orden);
         model.addAttribute("filtros", filtros);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 
@@ -329,6 +339,8 @@ public class AnalistaController {
         model.addAttribute("buscador", 3);
         model.addAttribute("ordenSeleccionado", orden);
         model.addAttribute("filtros", filtros);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 
@@ -366,6 +378,8 @@ public class AnalistaController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", 4);
         model.addAttribute("filtros", filtros);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 
@@ -403,6 +417,8 @@ public class AnalistaController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", 5);
         model.addAttribute("filtros", filtros);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
     @PostMapping("/exportarCSV")
@@ -520,7 +536,8 @@ public class AnalistaController {
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("usuario", usuario);
         model.addAttribute("buscador", tipo);
-
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 
@@ -545,6 +562,8 @@ public class AnalistaController {
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 1);
         model.addAttribute("ordenSeleccionado", session.getAttribute("ordenSeleccionado"));
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
 
     }
@@ -563,6 +582,8 @@ public class AnalistaController {
         model.addAttribute("totalUsuarios", usuarioRepository.count());
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 2);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
 
     }
@@ -581,6 +602,8 @@ public class AnalistaController {
         model.addAttribute("totalUsuarios", usuarioRepository.count());
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 3);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
 
     }
@@ -599,6 +622,8 @@ public class AnalistaController {
         model.addAttribute("totalUsuarios", usuarioRepository.count());
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 4);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
 
     }
@@ -618,6 +643,8 @@ public class AnalistaController {
         model.addAttribute("totalUsuarios", usuarioRepository.count());
         model.addAttribute("totalTrabajadores", trabajadorRepository.count());
         model.addAttribute("buscador", 5);
+        model.addAttribute("topPeliculasRecaudacion", peliculaRepository.findTop5PeliculasPorUtilidad(Pageable.ofSize(5)));
+        model.addAttribute("topActoresPeliculas", actorRepository.findTop5ActoresConMasPeliculas(Pageable.ofSize(5)));
         return "analista";
     }
 }
