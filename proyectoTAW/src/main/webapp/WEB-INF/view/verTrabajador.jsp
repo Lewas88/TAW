@@ -15,6 +15,11 @@
 <%
     Trabajador trabajador = (Trabajador) request.getAttribute("trabajador");
     UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
+    boolean puedeEditar13 = false;
+    if (user != null && user.getTipoUsuario() != null) { //David
+        int tipoId = user.getTipoUsuario().getId();
+        puedeEditar13 = (tipoId == 1 || tipoId == 3);
+    }
     List<Pelicula> peliculas = (List<Pelicula>) request.getAttribute("peliculas");
     if (peliculas == null) {
         peliculas = java.util.Collections.emptyList();
@@ -76,7 +81,7 @@
                     </table>
                 </div>
                 <%
-                    if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+                    if (puedeEditar13) { //David
                 %>
                 <div >
                     <a href="/trabajadores/editar?id=<%=trabajador.getId()%>" class="btn btn-primary">

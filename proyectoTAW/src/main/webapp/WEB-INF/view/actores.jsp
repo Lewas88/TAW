@@ -9,6 +9,13 @@
     <%
         List<Actor> lista = (List<Actor>) request.getAttribute("actors");
         UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
+        boolean puedeEditar13 = false;
+        boolean puedeBorrar = false;
+        if (user != null && user.getTipoUsuario() != null) { //David
+            int tipoId = user.getTipoUsuario().getId();
+            puedeEditar13 = (tipoId == 1 || tipoId == 3);
+            puedeBorrar = (tipoId == 1);
+        }
     %>
     <title>Catálogo de Actores</title>
 </head>
@@ -23,7 +30,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <%
-                if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+                if (puedeEditar13) { //David
             %>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h1 class="mb-0">Listado de Actores:</h1>
@@ -50,13 +57,13 @@
                                     <a type="button" href="/actores/ver?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Ver <i class="bi bi-eye"></i></a>
                                     <%
-                                        if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+                                        if (puedeEditar13) { //David
                                     %>
                                     <a type="button" href="/actores/editar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Editar <i class="bi bi-pencil"></i></a>
                                     <%
                                         }
-                                        if (user.getTipoUsuario().getId() == 1) { //David
+                                        if (puedeBorrar) { //David
                                     %>
                                     <a type="button" href="/actores/borrar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-danger">
                                         Borrar <i class="bi bi-trash"></i>

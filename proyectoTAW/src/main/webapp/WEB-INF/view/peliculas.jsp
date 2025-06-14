@@ -13,6 +13,13 @@ User: Enrique Silveira
     <%
         List<Pelicula> lista = (List<Pelicula>) request.getAttribute("peliculas");
         UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
+        boolean puedeEditar13 = false;
+        boolean puedeBorrar = false;
+        if (user != null && user.getTipoUsuario() != null) { //David
+            int tipoId = user.getTipoUsuario().getId();
+            puedeEditar13 = (tipoId == 1 || tipoId == 3);
+            puedeBorrar = (tipoId == 1);
+        }
     %>
     <title>Catálogo de Películas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +32,7 @@ User: Enrique Silveira
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="mb-0">Catálogo de películas disponibles</h1>
         <%
-            if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+            if (puedeEditar13) { //David
         %>
         <form method="post" action="/peliculas/añadir">
             <a href="/peliculas/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir pelicula <i class="bi bi-plus-circle"></i></a>
@@ -56,13 +63,13 @@ User: Enrique Silveira
                                     <a type="button" href="/peliculas/ver?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Ver <i class="bi bi-eye"></i></a>
                                     <%
-                                        if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+                                        if (puedeEditar13) { //David
                                     %>
                                     <a type="button" href="/peliculas/editar?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Editar <i class="bi bi-pencil"></i></a>
                                     <%
                                         }
-                                        if (user.getTipoUsuario().getId() == 1) { //David
+                                        if (puedeBorrar) { //David
                                     %>
                                     <a href="/peliculas/borrar?id=<%= pelicula.getId() %>"
                                        onclick="return confirm('¿Está seguro de que quiere borrar la película <%=pelicula.getTitulo() %>?')"

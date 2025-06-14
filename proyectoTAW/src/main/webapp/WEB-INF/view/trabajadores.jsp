@@ -11,7 +11,14 @@
 <head>
     <title>Trabajadores</title>
     <%
-        UsuarioEntity user = (UsuarioEntity)session.getAttribute("user");
+        UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
+        boolean puedeEditar13 = false;
+        boolean puedeBorrar = false;
+        if (user != null && user.getTipoUsuario() != null) { //David
+            int tipoId = user.getTipoUsuario().getId();
+            puedeEditar13 = (tipoId == 1 || tipoId == 3);
+            puedeBorrar = (tipoId == 1);
+        }
         List<Trabajador> lista = (List<Trabajador>) request.getAttribute("trabajador");
     %>
 </head>
@@ -27,7 +34,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <%
-                if(user.getTipoUsuario().getId() ==1 || user.getTipoUsuario().getId() ==3){//David
+                if(puedeEditar13){//David
             %>
             <div class="mb-3">
                 <h1 class="mb-0">Listado de Trabajadores:</h1>
@@ -53,13 +60,13 @@
                                     <a type="button" href="/trabajadores/ver?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Ver <i class="bi bi-eye"></i></a>
                                     <%
-                                        if(user.getTipoUsuario().getId() ==1 || user.getTipoUsuario().getId() ==3){//David
+                                        if(puedeEditar13){//David
                                     %>
                                     <a type="button" href="/trabajadores/editar?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Editar <i class="bi bi-pencil"></i></a>
                                     <%
                                         }
-                                        if(user.getTipoUsuario().getId() ==1){//David
+                                        if(puedeBorrar){//David
                                     %>
                                     <a type="button" href="/trabajadores/borrar?id=<%=trabajador.getId()%>" class="btn btn-sm btn-outline-danger">
                                         Borrar <i class="bi bi-trash"></i>
