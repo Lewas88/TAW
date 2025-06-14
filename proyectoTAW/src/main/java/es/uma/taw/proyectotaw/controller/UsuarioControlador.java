@@ -48,6 +48,11 @@ public class UsuarioControlador {
     @GetMapping("/editar")
     public String doEditarUsuario(@RequestParam(value = "id" , defaultValue = "-1" )Integer id, HttpSession session, Model model) {
         UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(new UsuarioEntity());
+        if (usuario.getId() == null) {
+            // Nuevo usuario
+            TipoUsuario tipoDefault = tipoUsuarioRepository.findById(2).orElse(null); // Por ejemplo, ID 2: cliente
+            usuario.setTipoUsuario(tipoDefault);
+        }
         List<TipoUsuario> tipoUsuarios = this.tipoUsuarioRepository.findAll();
         UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
         model.addAttribute("user",user);
