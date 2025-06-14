@@ -14,6 +14,8 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
     //Enrique: Filtro de busqueda de actores por pelicula
     @Query("SELECT c.actor FROM Casting c WHERE c.pelicula.id = :peliculaId")
     List<Actor> findActoresByPeliculaId(@Param("peliculaId") Integer peliculaId);
+
+    //Diego
     @Query("SELECT a FROM Actor a " +
             "WHERE (:nombre IS NULL OR LOWER(a.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))) " +
             "AND (:minEdad IS NULL OR a.edad >= :minEdad) " +
@@ -22,6 +24,7 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
                                @Param("minEdad") Integer minEdad,
                                @Param("maxEdad") Integer maxEdad);
 
+    //Diego
     @Query("SELECT a.nombre, COUNT(c) FROM Casting c JOIN c.actor a GROUP BY a ORDER BY COUNT(c) DESC")
     List<Object[]> findTop5ActoresConMasPeliculas(Pageable pageable);
 }
