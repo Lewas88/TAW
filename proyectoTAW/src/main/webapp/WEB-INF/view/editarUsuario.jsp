@@ -15,6 +15,7 @@
   UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
   List<TipoUsuario> lista = (List<TipoUsuario>) request.getAttribute("tipoUsuarios");
   if (usuario.getId() == null) isEditar = false;
+  
 %>
 <html>
 <head>
@@ -24,10 +25,21 @@
 <body>
 <jsp:include page="cabecera.jsp" />
 <main class="container mt-4">
-  <!-- Botón volver -->
+  <%
+    if (user.getTipoUsuario().getId() == 1) {
+  %>
   <div class="mb-3">
     <a href="/usuario/" class="btn btn-sm btn-outline-secondary">&larr; Volver</a>
   </div>
+  <%
+  } else {
+  %>
+  <div class="mb-3">
+    <a href="/" class="btn btn-sm btn-outline-secondary">&larr; Volver</a>
+  </div>
+  <%
+    }
+  %>
 
   <!-- Contenedor imagen + formulario -->
   <div class="row align-items-start">

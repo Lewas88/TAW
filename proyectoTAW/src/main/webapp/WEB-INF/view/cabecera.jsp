@@ -55,7 +55,6 @@
                     </li>
                     <%
                         }
-                    %>
                         if(user.getTipoUsuario().getId() == 1){//David
                     %>
 

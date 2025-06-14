@@ -24,9 +24,21 @@
 <jsp:include page="cabecera.jsp" />
 <main class="container mt-4">
         <!-- Botón volver -->
+        <%
+          if (user.getTipoUsuario().getId() == 1) {
+        %>
         <div class="mb-3">
           <a href="/usuario/" class="btn btn-sm btn-outline-secondary">&larr; Volver</a>
         </div>
+        <%
+          } else {
+        %>
+        <div class="mb-3">
+          <a href="/" class="btn btn-sm btn-outline-secondary">&larr; Volver</a>
+        </div>
+        <%
+          }
+        %>
 
         <!-- Contenedor imagen + formulario -->
         <div class="row align-items-start">
