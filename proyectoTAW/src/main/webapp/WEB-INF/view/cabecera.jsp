@@ -47,6 +47,15 @@
                     <%
                         } else {//poner colorsito
                     %>
+                    <%
+                        if (user.getTipoUsuario().getId() == 5) {
+                    %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/analista/">Analista</a>
+                    </li>
+                    <%
+                        }
+                    %>
                         <li class="nav-item">
                             <a class="nav-link" href="/login/logout">Cerrar sesión</a>
                         </li>

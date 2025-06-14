@@ -29,7 +29,7 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "Usuario_ID", nullable = false)
+    @JoinColumn(name = "Usuario_ID", nullable = false, referencedColumnName = "ID")
     private UsuarioEntity usuario;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
