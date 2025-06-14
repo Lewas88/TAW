@@ -1,5 +1,6 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
   REALIZADO POR DANIEL LINARES Y ENRIQUE SILVEIRA
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -7,6 +8,7 @@
 <head>
     <%
         List<Actor> lista = (List<Actor>) request.getAttribute("actors");
+        UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
     %>
     <title>Catálogo de Actores</title>
 </head>
@@ -20,10 +22,16 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
+            <%
+                if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+            %>
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h1 class="mb-0">Listado de Actores:</h1>
                 <a href="/actores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir actor <i class="bi bi-plus-circle"></i></a>
             </div>
+            <%
+                }
+            %>
 
             <div class="row">
                 <%
@@ -41,11 +49,21 @@
                                 <div class="btn-group">
                                     <a type="button" href="/actores/ver?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Ver <i class="bi bi-eye"></i></a>
+                                    <%
+                                        if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+                                    %>
                                     <a type="button" href="/actores/editar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
                                         Editar <i class="bi bi-pencil"></i></a>
+                                    <%
+                                        }
+                                        if (user.getTipoUsuario().getId() == 1) { //David
+                                    %>
                                     <a type="button" href="/actores/borrar?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-danger">
                                         Borrar <i class="bi bi-trash"></i>
                                     </a>
+                                    <%
+                                        }
+                                    %>
                                 </div>
                             </div>
                         </div>

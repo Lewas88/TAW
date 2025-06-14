@@ -6,6 +6,8 @@ import es.uma.taw.proyectotaw.dao.PeliculaRepository;
 import es.uma.taw.proyectotaw.entity.Actor;
 import es.uma.taw.proyectotaw.entity.Casting;
 import es.uma.taw.proyectotaw.entity.Pelicula;
+import es.uma.taw.proyectotaw.entity.UsuarioEntity;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-//Julian y Enrique
+//Julian, Enrique y David
 
 @Controller
 @RequestMapping("/actores") //Julian
@@ -27,18 +29,22 @@ public class ActoresControlador { //Julian
 
     @Autowired protected CastingRepository castingRepository;
 
-    @GetMapping("/")//Julian
-    public String doListarActores(Model model) {
+    @GetMapping("/")//Julian y David
+    public String doListarActores(HttpSession session, Model model) {
         List<Actor> actors = actorRepository.findAll();
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
         model.addAttribute("actors", actors);
         return "actores";
     }
 
-    @GetMapping("/ver")//Julian y Enrique
-    public String doVerActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id,  Model model) {
+    @GetMapping("/ver")//Julian , Enrique y David
+    public String doVerActor(@RequestParam(value = "id", defaultValue = "-1" )Integer id, HttpSession session, Model model) {
         Actor actor = this.actorRepository.findById(id).orElse(new Actor());
         List<Pelicula> peliculasParticipadas = peliculaRepository.findPeliculasByActorId(id);
         model.addAttribute("casting", this.castingRepository.findByActorId(id));
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
         model.addAttribute("actor", actor);
         model.addAttribute("peliculasParticipadas", peliculasParticipadas);
         return "verActor";

@@ -4,9 +4,11 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.Actor" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.Pelicula" %>
 <%@ page import="java.util.List" %>
+<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   Actor actor = (Actor) request.getAttribute("actor");
+  UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
   List<Pelicula> peliculas = (List<Pelicula>) request.getAttribute("peliculasParticipadas");
 %>
 <html>
@@ -76,7 +78,9 @@
             </tbody>
           </table>
         </div>
-
+        <%
+          if (user.getTipoUsuario().getId() == 1 || user.getTipoUsuario().getId() == 3) { //David
+        %>
         <div >
           <a href="/actores/editar?id=<%=actor.getId()%>" class="btn btn-primary">
             Editar <i class="bi bi-pencil"></i>
@@ -84,7 +88,9 @@
           <a href="/actores/editarCasting?id=<%=actor.getId()%>" class="btn btn-sm btn-outline-secondary">
             Editar participaciones <i class="bi bi-plus-circle"></i></a>
         </div>
-
+        <%
+          }
+        %>
       </div>
     </div>
   </div>
