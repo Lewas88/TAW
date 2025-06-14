@@ -31,8 +31,10 @@ public class TrabajadorControlador {
     @Autowired
     protected TrabajadorPeliculaRepository trabajadorPeliculaRepository;
     @GetMapping("/")
-    public String listarTrabajadores(Model model) {
+    public String listarTrabajadores(HttpSession session, Model model) {
         List<Trabajador> trabajadores = trabajadorRepository.findAll();
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
         model.addAttribute("trabajador", trabajadores);
         return "trabajadores";
     }
