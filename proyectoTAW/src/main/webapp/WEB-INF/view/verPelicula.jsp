@@ -116,7 +116,7 @@ User: Daniel Linares y Enrique Silveira
                 <% for(Review review : reviewList) { %>
                 <div class="mb-3 border-bottom pb-2">
                     <strong>User:</strong> <%= review.getUsuario().getNombre() %>
-                    <%
+                    <%//David
                         boolean puedeBorrar = false;
                         if (user != null) {
                             puedeBorrar = (user.getId() == review.getUsuario().getId()) || (user.getId() == 1);
