@@ -90,9 +90,10 @@
           <% } else { %>
           <div class="mb-3">
             <label class="form-label">Tipo Usuario</label>
-            <input readonly type="text" class="form-control" name="tipoUsuario"
+            <input readonly type="text" class="form-control"
                    value="<%= usuario.getTipoUsuario().getTipo() %>" required>
           </div>
+          <input type="hidden" name="tipoUsuario" value="<%= usuario.getTipoUsuario().getId() %>">
           <% } %>
 
           <div class="d-grid">

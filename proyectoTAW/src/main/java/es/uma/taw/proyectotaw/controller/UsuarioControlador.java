@@ -72,7 +72,7 @@ public class UsuarioControlador {
         usuario.setCorreo(correo);
         usuario.setTipoUsuario(tipoUsuario);
         this.usuarioRepository.save(usuario);
-        return "redirect:/usuario/";
+        return "redirect:/";
     }
 
     @GetMapping("/borrar")
