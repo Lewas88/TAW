@@ -1,29 +1,33 @@
-<%-- Daniel Linares 100% --%>
-
 <%@ page import="es.uma.taw.proyectotaw.entity.Pelicula" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Pelicula> peliculasRecomendadas = (List<Pelicula>) request.getAttribute("peliculasRecomendadas");
     List<Pelicula> peliculas = (List<Pelicula>) request.getAttribute("peliculas");
+
+    int paginaActual = request.getParameter("pagina") != null ? Integer.parseInt(request.getParameter("pagina")) : 1;
+    int peliculasPorPagina = 20;
+    int totalPeliculas = peliculas.size();
+    int totalPaginas = (int) Math.ceil((double) totalPeliculas / peliculasPorPagina);
+    int inicio = (paginaActual - 1) * peliculasPorPagina;
+    int fin = Math.min(inicio + peliculasPorPagina, totalPeliculas);
 %>
 <html>
 <head>
     <title>Home</title>
+    <style>
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            filter: invert(1);
+        }
+    </style>
 </head>
-<style>
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        filter: invert(1);
-    }
-</style>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
 <jsp:include page="cabecera.jsp" />
 <main>
-    <!-- Recomendaciones destacadas, lista de 10 -->
-    <section class="container my-4">
-        <h2 class="text-center mb-4">Recomendaciones destacadas</h2>
+    <!-- Recomendaciones destacadas, esta basado en las reviews de recomendadores, no en la calificacion que tienen las pelis de base -->
+    <section class="container my-3">
+        <h2 class="text-center mb-3">Recomendaciones destacadas</h2>
         <div id="carouselRecomendadas" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <%
@@ -62,7 +66,8 @@
         <div class="container">
             <div class="row">
                 <%
-                    for (Pelicula peli : peliculas) {
+                    for (int i = inicio; i < fin; i++) {
+                        Pelicula peli = peliculas.get(i);
                 %>
                 <div class="col-md-3">
                     <div class="card mb-4"
@@ -85,19 +90,55 @@
                     }
                 %>
             </div>
+
+            <!-- Esto es para que no aparezcan todas las pelis a la vez, va por paginas -->
+            <div class="d-flex justify-content-center mt-4">
+                <nav>
+                    <ul class="pagination">
+                        <% if (paginaActual > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?pagina=<%= paginaActual - 1 %>">&laquo;</a>
+                        </li>
+                        <% } %>
+
+                        <%
+                            int maxVisibles = 3;
+                            int inicioPaginado = Math.max(1, paginaActual - maxVisibles);
+                            int finPaginado = Math.min(totalPaginas, paginaActual + maxVisibles);
+
+                            if (inicioPaginado > 1) {
+                        %>
+                        <li class="page-item"><a class="page-link" href="?pagina=1">1</a></li>
+                        <% if (inicioPaginado > 2) { %>
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        <% } %>
+                        <% } %>
+
+                        <% for (int i = inicioPaginado; i <= finPaginado; i++) { %>
+                        <li class="page-item <%= (i == paginaActual) ? "active" : "" %>">
+                            <a class="page-link" href="?pagina=<%= i %>"><%= i %></a>
+                        </li>
+                        <% } %>
+
+                        <% if (finPaginado < totalPaginas) { %>
+                        <% if (finPaginado < totalPaginas - 1) { %>
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        <% } %>
+                        <li class="page-item"><a class="page-link" href="?pagina=<%= totalPaginas %>"><%= totalPaginas %></a></li>
+                        <% } %>
+
+                        <% if (paginaActual < totalPaginas) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="?pagina=<%= paginaActual + 1 %>">&raquo;</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </main>
 <jsp:include page="piedepagina.jsp" />
-<script>
-    let current = 0;
-    const cards = document.querySelectorAll(".recomendada-card");
-
-    function cambiarRecomendada(dir) {
-        cards[current].classList.remove("active");
-        current = (current + dir + cards.length) % cards.length;
-        cards[current].classList.add("active");
-    }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
