@@ -115,7 +115,8 @@ User: Daniel Linares y Enrique Silveira
         <div class="col-md-8">
             <div class="card shadow p-4">
                 <h3 class="mb-3">Reviews de nuestros recomendadores:</h3>
-                <% for(Review review : reviewList) { %>
+                <% for(Review review : reviewList) {
+                    if(review.getPelicula().getId() == pelicula.getId()) { %>
                     <div class="mb-3 border-bottom pb-2">
                         <strong>User:</strong> <%= review.getUsuario().getNombre() %>
                         <% if(user != null && user.getId() == review.getUsuario().getId() || user.getTipoUsuario().getId() == 1) {// David %>
@@ -128,6 +129,7 @@ User: Daniel Linares y Enrique Silveira
                         <strong>Review:</strong> <%= review.getComentario() %> <br>
                         <strong>Calificación:</strong> <%= review.getCalifica() %>
                     </div>
+                    <% } %>
                 <% } %>
             </div>
         </div>
