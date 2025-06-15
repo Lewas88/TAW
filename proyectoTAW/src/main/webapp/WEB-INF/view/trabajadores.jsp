@@ -34,12 +34,12 @@
 <main>
     <div class="album py-5 bg-light">
         <div class="container">
-            <h1 class="mb-0"> class="mb-0">Listado de Trabajadores:</h1>
-            <% if(puedeEditar13){//David %>
             <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="mb-0">Listado de Trabajadores:</h1>
+            <% if(puedeEditar13){//David %>
                 <a href="/trabajadores/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir trabajador <i class="bi bi-plus-circle"></i></a>
-            </div>
             <% } %>
+            </div>
 
             <div class="row">
                 <% for (int i = inicio; i < fin; i++) {

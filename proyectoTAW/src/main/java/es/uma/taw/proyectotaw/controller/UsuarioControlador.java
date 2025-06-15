@@ -70,6 +70,9 @@ public class UsuarioControlador {
         UsuarioEntity usuario = this.usuarioRepository.findById(id).orElse(new UsuarioEntity());
         usuario.setNombre(nombre);
         usuario.setCorreo(correo);
+        if (id  == -1 ) {
+            usuario.setContrasenaHash("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+        }
         usuario.setTipoUsuario(tipoUsuario);
         this.usuarioRepository.save(usuario);
         return "redirect:/";
