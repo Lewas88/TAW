@@ -56,16 +56,6 @@ public class PeliculasControlador {
         return "verCastingPelicula";
     }
 
-
-    /*
-    @PostMapping("/recomendar")
-    public String doRecomendar(@RequestParam(value = "id")Integer id, Model model) {
-        Pelicula pelicula = this.peliculaRepository.findById(id).orElse(null);
-
-        return "redirect:/peliculas/";
-    }
-    */
-
     @PostMapping("/anyadirReview")
     public String doAnyadirReview(@RequestParam(value = "idPelicula")Integer id,
                                   @RequestParam("puntuacion")Double puntuacion,

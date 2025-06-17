@@ -12,8 +12,13 @@ import java.util.List;
 public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
     //Daniel Linares
     @Query("SELECT r.pelicula FROM Review r GROUP BY r.pelicula ORDER BY AVG(r.califica) DESC")
-    List<Pelicula> findTopRated(Pageable pageable);
-
+    List<Pelicula> findTopRatedByReviews(Pageable pageable);
+    //Daniel Linares
+    @Query("SELECT gp.pelicula FROM GeneroPelicula gp WHERE LOWER(gp.genero.nombre) = LOWER(:nombreGenero)")
+    List<Pelicula> findPeliculasByGenero(@Param("nombreGenero") String nombreGenero, Pageable pageable);
+    //Daniel Linares
+    @Query("SELECT p FROM Pelicula p ORDER BY p.rating DESC")
+    List<Pelicula> findTopRatedByRating(Pageable pageable);
     //Enrique 
     @Query("SELECT c.pelicula FROM Casting c WHERE c.actor.id = :actorId")
     List<Pelicula> findPeliculasByActorId(@Param("actorId") Integer actorId);

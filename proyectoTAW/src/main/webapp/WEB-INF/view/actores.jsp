@@ -31,7 +31,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="mb-0">Listado de Trabajadores:</h1>
+            <h1 class="mb-0">Listado de Actores:</h1>
             <%
                 if (puedeEditar13) { //David
             %>

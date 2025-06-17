@@ -2,9 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--
-  User: Daniel Linares 100%
---%>
+<%-- Daniel Linares 100% --%>
 <%
     UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
     boolean puedeEditar13 = false;

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Daniel
-  Date: 09/06/2025
-  Time: 12:40
-  To change this template use File | Settings | File Templates.
---%>
 <%-- Daniel Linares y Enrique Silveira --%>
 
 <%@ page import="es.uma.taw.proyectotaw.entity.Trabajador" %>

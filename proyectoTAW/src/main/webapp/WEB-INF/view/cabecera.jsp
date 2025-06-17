@@ -1,12 +1,7 @@
 <%@ page import="java.util.Date" %>
-<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %><%--
-  Created by IntelliJ IDEA.
-  User: Julian Lemus 50% y Daniel Linares 50%
-  Date: 9/4/25
-  Time: 12:24
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="es.uma.taw.proyectotaw.entity.UsuarioEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- Users: Julian Lemus 50% y Daniel Linares 50% --%>
 <html>
 <head>
     <%
@@ -18,7 +13,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
