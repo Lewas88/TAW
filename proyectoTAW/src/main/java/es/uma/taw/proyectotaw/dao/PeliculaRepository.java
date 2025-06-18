@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
+    //Julian
+    @Query("SELECT pL from Pelicula pL WHERE LOWER(pL.titulo) LIKE LOWER(CONCAT('%',:nombreLike,'%') )")
+    List<Pelicula> findAPeliculasLike(@Param("nombreLike") String nombreLike);
     //Daniel Linares
     @Query("SELECT r.pelicula FROM Review r GROUP BY r.pelicula ORDER BY AVG(r.califica) DESC")
     List<Pelicula> findTopRatedByReviews(Pageable pageable);

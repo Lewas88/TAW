@@ -129,4 +129,13 @@ public class TrabajadorControlador {
 
         return "redirect:/trabajadores/ver?id=" + trabajadorId;
     }
+
+    //Julian
+    @GetMapping("/buscarTrabajadores")
+    public String doBuscarActores(@RequestParam("busquedaNombreTrabajador") String nombre, HttpSession session, Model model) {
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
+        model.addAttribute("trabajador", trabajadorRepository.filtrarTrabajadores(nombre,null,null));
+        return "trabajadores";
+    }
 }

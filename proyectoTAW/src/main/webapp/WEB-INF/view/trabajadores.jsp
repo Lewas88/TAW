@@ -39,6 +39,12 @@
             <% } %>
             </div>
 
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <form class="d-flex" action="/trabajadores/buscarTrabajadores" method="get" >
+                    <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" name="busquedaNombreTrabajador">
+                </form>
+            </div>
+
             <div class="row">
                 <% for (int i = inicio; i < fin; i++) {
                     Trabajador trabajador = lista.get(i);

@@ -40,6 +40,11 @@ User: Enrique Silveira
         <a href="/peliculas/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir película <i class="bi bi-plus-circle"></i></a>
         <% } %>
     </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <form class="d-flex" action="/peliculas/buscarPeliculas" method="get" >
+            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" name="busquedaNombrePelicula">
+        </form>
+    </div>
     <div class="album py-3 bg-light">
         <div class="container">
             <div class="row">

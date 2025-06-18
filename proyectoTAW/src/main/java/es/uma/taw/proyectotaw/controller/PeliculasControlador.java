@@ -114,5 +114,14 @@ public class PeliculasControlador {
         int nuevoid = pelicula.getId();
         return "redirect:/peliculas/ver?id=" + nuevoid;
     }
+
+    //Julian
+    @GetMapping("/buscarPeliculas")
+    public String doBuscarActores(@RequestParam("busquedaNombrePelicula") String nombre, HttpSession session, Model model) {
+        UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
+        model.addAttribute("user",user);
+        model.addAttribute("peliculas", peliculaRepository.findAPeliculasLike(nombre));
+        return "peliculas";
+    }
 }
 

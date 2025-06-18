@@ -47,7 +47,7 @@ public class BaseControlador {
 
     @PostMapping("/buscar")//Julian
     public String doBuscar(@RequestParam("busqueda") String busqueda) {
-        String s = busqueda;
+        String nombresPelicula = busqueda;
         return "redirect:/";
     }
 }

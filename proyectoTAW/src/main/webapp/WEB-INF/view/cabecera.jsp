@@ -86,9 +86,6 @@
                 <%
                     }
                 %>
-                <form class="d-flex" action="/buscar" method="post" >
-                    <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" name="busqueda">
-                </form>
             </div>
         </div>
     </nav>
