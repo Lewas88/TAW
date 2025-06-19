@@ -115,12 +115,20 @@ public class PeliculasControlador {
         return "redirect:/peliculas/ver?id=" + nuevoid;
     }
 
-    //Julian
+    // Julian y Daniel
     @GetMapping("/buscarPeliculas")
-    public String doBuscarActores(@RequestParam("busquedaNombrePelicula") String nombre, HttpSession session, Model model) {
+    public String doBuscarPeliculas(@RequestParam(value = "busquedaNombrePelicula", required = false) String nombre,
+                                    HttpSession session,
+                                    Model model) {
         UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
-        model.addAttribute("peliculas", peliculaRepository.findAPeliculasLike(nombre));
+        model.addAttribute("user", user);
+
+        if (nombre != null && !nombre.isBlank()) {
+            model.addAttribute("peliculas", peliculaRepository.findAPeliculasLike(nombre));
+        } else {
+            model.addAttribute("peliculas", peliculaRepository.findAll());
+        }
+
         return "peliculas";
     }
 }

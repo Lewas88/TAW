@@ -130,12 +130,20 @@ public class TrabajadorControlador {
         return "redirect:/trabajadores/ver?id=" + trabajadorId;
     }
 
-    //Julian
+    // Julian y Daniel
     @GetMapping("/buscarTrabajadores")
-    public String doBuscarActores(@RequestParam("busquedaNombreTrabajador") String nombre, HttpSession session, Model model) {
+    public String doBuscarTrabajadores(@RequestParam(value = "busquedaNombreTrabajador", required = false) String nombre,
+                                       HttpSession session,
+                                       Model model) {
         UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
-        model.addAttribute("trabajador", trabajadorRepository.filtrarTrabajadores(nombre,null,null));
+        model.addAttribute("user", user);
+
+        if (nombre != null && !nombre.isBlank()) {
+            model.addAttribute("trabajador", trabajadorRepository.filtrarTrabajadores(nombre, null, null));
+        } else {
+            model.addAttribute("trabajador", trabajadorRepository.findAll());
+        }
+
         return "trabajadores";
     }
 }

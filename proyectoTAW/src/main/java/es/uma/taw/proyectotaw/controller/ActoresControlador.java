@@ -124,12 +124,19 @@ public class ActoresControlador { //Julian
         return "redirect:/actores/ver?id=" + actorId;
     }
 
-    //Julian
+    // Julian y Daniel
     @GetMapping("/buscarActores")
-    public String doBuscarActores(@RequestParam("busquedaNombreActor") String nombre, HttpSession session, Model model) {
+    public String doBuscarOListarActores(@RequestParam(value = "busquedaNombreActor", required = false) String nombre,
+                                         HttpSession session, Model model) {
         UsuarioEntity user = (UsuarioEntity) session.getAttribute("user");
-        model.addAttribute("user",user);
-        model.addAttribute("actors", actorRepository.filtrarActores(nombre,null,null));
+        model.addAttribute("user", user);
+
+        if (nombre != null && !nombre.isBlank()) {
+            model.addAttribute("actors", actorRepository.filtrarActores(nombre, null, null));
+        } else {
+            model.addAttribute("actors", actorRepository.findAll());
+        }
+
         return "actores";
     }
 }

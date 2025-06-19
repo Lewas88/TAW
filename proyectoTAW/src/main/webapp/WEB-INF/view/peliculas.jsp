@@ -11,7 +11,7 @@ User: Enrique Silveira
     UsuarioEntity user = (UsuarioEntity) request.getAttribute("user");
     boolean puedeEditar13 = false;
     boolean puedeBorrar = false;
-    if (user != null && user.getTipoUsuario() != null) { //David
+    if (user != null && user.getTipoUsuario() != null) {
         int tipoId = user.getTipoUsuario().getId();
         puedeEditar13 = (tipoId == 1 || tipoId == 3);
         puedeBorrar = (tipoId == 1);
@@ -23,6 +23,9 @@ User: Enrique Silveira
     int totalPaginas = (int) Math.ceil((double) totalPeliculas / peliculasPorPagina);
     int inicio = (paginaActual - 1) * peliculasPorPagina;
     int fin = Math.min(inicio + peliculasPorPagina, totalPeliculas);
+
+    String busqueda = request.getParameter("busquedaNombrePelicula");
+    String parametrosBusqueda = (busqueda != null && !busqueda.isBlank()) ? "&busquedaNombrePelicula=" + java.net.URLEncoder.encode(busqueda, "UTF-8") : "";
 %>
 <html>
 <head>
@@ -36,13 +39,13 @@ User: Enrique Silveira
 <main class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="mb-0">Catálogo de películas disponibles</h1>
-        <% if (puedeEditar13) { //David %>
+        <% if (puedeEditar13) { %>
         <a href="/peliculas/editar?id=-1" class="btn btn-sm btn-outline-secondary">Añadir película <i class="bi bi-plus-circle"></i></a>
         <% } %>
     </div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <form class="d-flex" action="/peliculas/buscarPeliculas" method="get" >
-            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" name="busquedaNombrePelicula">
+            <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" name="busquedaNombrePelicula" value="<%= busqueda != null ? busqueda : "" %>">
         </form>
     </div>
     <div class="album py-3 bg-light">
@@ -65,10 +68,10 @@ User: Enrique Silveira
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div class="btn-group">
                                     <a href="/peliculas/ver?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">Ver <i class="bi bi-eye"></i></a>
-                                    <% if (puedeEditar13) { //David %>
+                                    <% if (puedeEditar13) { %>
                                     <a href="/peliculas/editar?id=<%=pelicula.getId()%>" class="btn btn-sm btn-outline-secondary">Editar <i class="bi bi-pencil"></i></a>
                                     <% } %>
-                                    <% if (puedeBorrar) { //David%>
+                                    <% if (puedeBorrar) { %>
                                     <a href="/peliculas/borrar?id=<%= pelicula.getId() %>"
                                        onclick="return confirm('¿Está seguro de que quiere borrar la película <%=pelicula.getTitulo() %>?')"
                                        class="btn btn-sm btn-outline-danger">Borrar <i class="bi bi-trash"></i></a>
@@ -81,13 +84,13 @@ User: Enrique Silveira
                 <% } %>
             </div>
 
-            <!-- Paginación -->
+            <!-- Paginación Daniel Linares -->
             <div class="d-flex justify-content-center mt-4">
                 <nav>
                     <ul class="pagination">
                         <% if (paginaActual > 1) { %>
                         <li class="page-item">
-                            <a class="page-link" href="?pagina=<%= paginaActual - 1 %>">&laquo;</a>
+                            <a class="page-link" href="?pagina=<%= paginaActual - 1 %><%= parametrosBusqueda %>">&laquo;</a>
                         </li>
                         <% } %>
 
@@ -98,7 +101,7 @@ User: Enrique Silveira
 
                             if (inicioPaginado > 1) {
                         %>
-                        <li class="page-item"><a class="page-link" href="?pagina=1">1</a></li>
+                        <li class="page-item"><a class="page-link" href="?pagina=1<%= parametrosBusqueda %>">1</a></li>
                         <% if (inicioPaginado > 2) { %>
                         <li class="page-item disabled"><span class="page-link">...</span></li>
                         <% } %>
@@ -106,7 +109,7 @@ User: Enrique Silveira
 
                         <% for (int i = inicioPaginado; i <= finPaginado; i++) { %>
                         <li class="page-item <%= (i == paginaActual) ? "active" : "" %>">
-                            <a class="page-link" href="?pagina=<%= i %>"><%= i %></a>
+                            <a class="page-link" href="?pagina=<%= i %><%= parametrosBusqueda %>"><%= i %></a>
                         </li>
                         <% } %>
 
@@ -114,12 +117,12 @@ User: Enrique Silveira
                         <% if (finPaginado < totalPaginas - 1) { %>
                         <li class="page-item disabled"><span class="page-link">...</span></li>
                         <% } %>
-                        <li class="page-item"><a class="page-link" href="?pagina=<%= totalPaginas %>"><%= totalPaginas %></a></li>
+                        <li class="page-item"><a class="page-link" href="?pagina=<%= totalPaginas %><%= parametrosBusqueda %>"><%= totalPaginas %></a></li>
                         <% } %>
 
                         <% if (paginaActual < totalPaginas) { %>
                         <li class="page-item">
-                            <a class="page-link" href="?pagina=<%= paginaActual + 1 %>">&raquo;</a>
+                            <a class="page-link" href="?pagina=<%= paginaActual + 1 %><%= parametrosBusqueda %>">&raquo;</a>
                         </li>
                         <% } %>
                     </ul>
