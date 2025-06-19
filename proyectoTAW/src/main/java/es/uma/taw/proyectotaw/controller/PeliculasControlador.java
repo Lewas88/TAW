@@ -131,5 +131,11 @@ public class PeliculasControlador {
 
         return "peliculas";
     }
+
+    @GetMapping("/borrar")//Enrique
+    public String doBorrarPelicula(@RequestParam("id")Integer id) {
+        this.peliculaRepository.deleteById(id);
+        return "redirect:/peliculas/";
+    }
 }
 
