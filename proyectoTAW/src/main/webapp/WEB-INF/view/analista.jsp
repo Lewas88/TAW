@@ -3,7 +3,7 @@
 <%@ page import="es.uma.taw.proyectotaw.entity.*" %>
 <%@ page import="es.uma.taw.proyectotaw.ui.Usuario" %>
 <%@ include file="cabecera.jsp" %>
-
+<!-- Diego -->
 <!DOCTYPE html>
 <html lang="es">
 <head>

@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.List;
-
+//Diego Alba
 @Controller
 @RequestMapping("/analista")
 public class AnalistaController {
@@ -46,7 +47,6 @@ public class AnalistaController {
         if (filtros != null) {
             model.addAttribute("filtros", filtros);
         }
-        // Guardar la distribución de rating en el modelo para el JSP
         for (int i = 0; i < 9; i++) {
 
             int count = peliculaRepository.countByRatingBetween(i, i + 1);
@@ -112,7 +112,6 @@ public class AnalistaController {
                 fechaFinLD = LocalDate.parse(fechaFin);
             }
         } catch (DateTimeParseException e) {
-            // Manejar error de formato de fecha si es necesario
             model.addAttribute("error", "Formato de fecha inválido");
             return "analista";
         }
@@ -121,40 +120,46 @@ public class AnalistaController {
                 keyword, minIngresos, maxIngresos, minPresupuesto, maxPresupuesto,
                 fechaInicioLD, fechaFinLD, minRating, minDuracion, maxDuracion
         );
-        // Después ordenar
         if (orden != null && !orden.isEmpty()) {
+            Comparator<Pelicula> comparator = null;
+
             switch (orden) {
                 case "ingresosDesc":
-                    peliculasFiltradas.sort((p1, p2) -> p2.getIngresos().compareTo(p1.getIngresos()));
+                    comparator = Comparator.comparing(Pelicula::getIngresos, Comparator.nullsLast(Comparator.reverseOrder()));
                     break;
                 case "ingresosAsc":
-                    peliculasFiltradas.sort((p1, p2) -> p1.getIngresos().compareTo(p2.getIngresos()));
+                    comparator = Comparator.comparing(Pelicula::getIngresos, Comparator.nullsFirst(Comparator.naturalOrder()));
                     break;
                 case "presupuestoDesc":
-                    peliculasFiltradas.sort((p1, p2) -> p2.getPresupuesto().compareTo(p1.getPresupuesto()));
+                    comparator = Comparator.comparing(Pelicula::getPresupuesto, Comparator.nullsLast(Comparator.reverseOrder()));
                     break;
                 case "presupuestoAsc":
-                    peliculasFiltradas.sort((p1, p2) -> p1.getPresupuesto().compareTo(p2.getPresupuesto()));
+                    comparator = Comparator.comparing(Pelicula::getPresupuesto, Comparator.nullsFirst(Comparator.naturalOrder()));
                     break;
                 case "ratingDesc":
-                    peliculasFiltradas.sort((p1, p2) -> p2.getRating().compareTo(p1.getRating()));
+                    comparator = Comparator.comparing(Pelicula::getRating, Comparator.nullsLast(Comparator.reverseOrder()));
                     break;
                 case "ratingAsc":
-                    peliculasFiltradas.sort((p1, p2) -> p1.getRating().compareTo(p2.getRating()));
+                    comparator = Comparator.comparing(Pelicula::getRating, Comparator.nullsFirst(Comparator.naturalOrder()));
                     break;
                 case "fechaDesc":
-                    peliculasFiltradas.sort((p1, p2) -> p2.getFechaEstreno().compareTo(p1.getFechaEstreno()));
+                    comparator = Comparator.comparing(Pelicula::getFechaEstreno, Comparator.nullsLast(Comparator.reverseOrder()));
                     break;
                 case "fechaAsc":
-                    peliculasFiltradas.sort((p1, p2) -> p1.getFechaEstreno().compareTo(p2.getFechaEstreno()));
+                    comparator = Comparator.comparing(Pelicula::getFechaEstreno, Comparator.nullsFirst(Comparator.naturalOrder()));
                     break;
                 case "duracionDesc":
-                    peliculasFiltradas.sort((p1, p2) -> p2.getDuracion().compareTo(p1.getDuracion()));
+                    comparator = Comparator.comparing(Pelicula::getDuracion, Comparator.nullsLast(Comparator.reverseOrder()));
                     break;
                 case "duracionAsc":
-                    peliculasFiltradas.sort((p1, p2) -> p1.getDuracion().compareTo(p2.getDuracion()));
+                    comparator = Comparator.comparing(Pelicula::getDuracion, Comparator.nullsFirst(Comparator.naturalOrder()));
                     break;
             }
+
+            if (comparator != null) {
+                peliculasFiltradas.sort(comparator);
+            }
+
             session.setAttribute("ordenSeleccionado", orden);
         }
 
@@ -215,7 +220,6 @@ public class AnalistaController {
                 fechaFinLD = LocalDate.parse(fechaFin);
             }
         } catch (DateTimeParseException e) {
-            // Manejar error de formato de fecha si es necesario
             model.addAttribute("error", "Formato de fecha inválido");
             return "analista";
         }
@@ -243,7 +247,7 @@ public class AnalistaController {
         }
         List<Review> reviewsFiltradas = reviewRepository.filtrarReviews(
                 keyword, keyword2, fechaInicioLD, fechaFinLD, minRating);
-        // Después ordenar
+
         if (orden != null && !orden.isEmpty()) {
             switch (orden) {
                 case "ratingDesc":
@@ -306,7 +310,7 @@ public class AnalistaController {
         session.setAttribute("filtrosActores", filtros);
 
         List<Actor> actoresFiltrados = actorRepository.filtrarActores(keyword, minEdad, maxEdad);
-        // Después ordenar
+
         if (orden != null && !orden.isEmpty()) {
             switch (orden) {
                 case "ingresosDesc":
@@ -498,7 +502,6 @@ public class AnalistaController {
             return "redirect:/login/";
         }
 
-        // Eliminar filtros y orden según el tipo
         switch (tipo) {
             case 1:
                 session.removeAttribute("filtrosPelicula");
